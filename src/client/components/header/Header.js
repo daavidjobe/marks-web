@@ -1,7 +1,9 @@
 import React from 'react';
-
+import './header.less';
 export default (props) => {
     return (
-        <div>header</div>
+        <div className="header">
+            
+        </div>
     )
 }
