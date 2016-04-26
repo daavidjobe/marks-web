@@ -17,4 +17,12 @@ config.plugins.push(
   })
 );
 
+config.plugins.push(
+    new webpack.optimize.DedupePlugin()
+);
+
+config.plugins.push(
+    new webpack.optimize.AggressiveMergingPlugin()
+);
+
 module.exports = config;
