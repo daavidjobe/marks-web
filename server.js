@@ -16,14 +16,14 @@ if(process.env.NODE_ENV !== 'production') {
   app.use(webpackHotMiddleware(compiler));
 }
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static('dist'));
 
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + 'dist/index.html')
+  response.sendFile('dist/index.html')
 });
 
 app.get('/*', function(request, response) {
-  response.sendFile(__dirname + 'dist/index.html')
+  response.sendFile('dist/index.html')
 });
 
 app.listen(PORT, function(error) {
