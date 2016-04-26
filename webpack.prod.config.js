@@ -1,6 +1,8 @@
 var config = require('./webpack.config.js');
 var webpack = require('webpack');
 
+config.devtool = 'source-map';
+
 config.plugins.push(
   new webpack.DefinePlugin({
     "process.env": {
@@ -11,9 +13,10 @@ config.plugins.push(
 
 config.plugins.push(
   new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false
-    }
+    compress: { warnings: false },
+    comments: false,
+    mangle: true,
+    minimize: true
   })
 );
 

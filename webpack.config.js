@@ -28,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: "style!css!less"
+        loader: "style!css!less?sourceMap"
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
