@@ -1,12 +1,20 @@
+var webpack = require('webpack');
+var path = require('path');
+
 module.exports = {
-  entry: './src/client/index.js',
+  entry: [
+   './src/client/index.js' 
+  ],
   output: {
-    path: './dist/',
-    filename: 'dist/bundle.js'
+    path: path.join(__dirname, '/dist'),
+    publicPath: '/',
+    filename: 'bundle.js'
   },
+  devtool: 'eval',
   devServer: {
-    inline: true,
-    port: 3333
+    port: 3333,
+    contentBase: './dist',
+    hot: true
   },
   module: {
     loaders: [
@@ -41,7 +49,16 @@ module.exports = {
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=image/svg+xml"
+      },
+      { 
+        test: /\.jpe?g$|\.gif$|\.png$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+        loader: "file"
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ]
 };
