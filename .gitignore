@@ -1,4 +1,8 @@
 node_modules/
 .vscode
 *.log
-dist/
+dist/*.eot
+dist/*.woff
+dist/*.woff2
+dist/*.svg
+dist/*.js
