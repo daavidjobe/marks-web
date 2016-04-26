@@ -1,0 +1,46 @@
+@import "variables.less";
+
+.btn-primary(@width) {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px 0;
+    width: @width;
+    background: transparent;
+    border: none;
+    text-align: center;
+    outline: none;
+    p {
+        margin-bottom: 5px;
+         position: relative;
+    }
+    .underline {
+      margin-top: 2px;
+      height: 0;
+      width: 0;
+      background: @purple;
+    }
+    &:active {
+        p {
+           color: lighten(@purple, 15%);
+        }
+        .underline {
+            background: lighten(@purple, 15%);
+        }
+    }
+    &:hover {
+        color: @purple;
+        text-shadow: 0 0 30px @purple;
+        transition: all .6s ease;
+      .underline {
+        position: absolute;
+        height: 5px;
+        width: @width;
+        transition: width .4s ease;
+      }
+      p {
+            transform: translateY(-3px);
+            transition: transform .3s ease;
+        }
+    }
+}
