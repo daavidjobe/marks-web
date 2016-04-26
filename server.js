@@ -19,11 +19,11 @@ if(process.env.NODE_ENV !== 'production') {
 app.use(express.static('dist'));
 
 app.get('/', function(request, response) {
-  response.sendFile('dist/index.html')
+  response.sendFile('/dist/index.html')
 });
 
 app.get('/*', function(request, response) {
-  response.sendFile('dist/index.html')
+  response.sendFile('/dist/index.html')
 });
 
 app.listen(PORT, function(error) {
