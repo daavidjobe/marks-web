@@ -1,8 +1,30 @@
+@import '../../variables.less';
+@import '../../buttons.less';
+
 .sidebar {
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
-    flex-grow: 1;
+    flex-grow: 0;
+    flex-basis: 200px;
+    border-left: 2px solid @purple;
+    ul {
+        list-style: none;
+        padding: 5px;
+        li {
+            margin: 5px;
+        }
+        .button {
+            .btn-primary(180px);
+            text-align: left;
+            .fa {
+                margin-right: 5px;
+                background: @purple;
+                color: #fff;
+                padding: 5px 10px;
+                border-radius: 4px;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 767px) {
