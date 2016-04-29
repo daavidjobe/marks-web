@@ -1,0 +1,28 @@
+@import "../../variables.less";
+
+.form-login, .form-signup {
+    padding: 5px;
+    margin: 5px;
+    input {
+        margin: 0 5px;
+        outline: none;
+        border: none;
+        border-bottom: 2px solid @purple;
+    }
+    input[type="submit"] {
+        background: transparent;
+        border: 1px solid @purple;
+        color: @purple;
+        padding: 5px 15px;
+        cursor: pointer;
+        &:hover {
+           border: 1px solid lighten(@purple, 15%);
+           color: lighten(@purple, 15%);
+           transition: all .4s ease-in; 
+        }
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
