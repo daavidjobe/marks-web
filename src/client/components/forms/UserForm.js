@@ -1,6 +1,7 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
 import {validateEmail, validatePassword} from '../../helpers/validation';
-import api from '../../api/users';
+import UserService from '../../services/UserService';
 import './forms.less';
 
 class UserForm extends React.Component {
@@ -9,6 +10,7 @@ class UserForm extends React.Component {
         super(props)
         this.state = {
             formDisabled: true,
+            formToggled: true,
             emailMessage: '',
             passwordMessage: '',
         }
@@ -44,23 +46,27 @@ class UserForm extends React.Component {
         e.preventDefault();
         switch (this.props.action) {
             case 'sign up':
-                api.register({
+                UserService.register({
                     email: this.refs.email.value,
                     password: this.refs.password.value
                 }).then(res => {
                     console.log(res);
                     this.refs.email.value = '';
                     this.refs.password.value = '';
+                    this.setState({formToggled: false})
+                    browserHistory.replace(`/dashboard/${res.email}`);
                 })
                 break;
              case 'sign in':
-                api.login({
+                UserService.login({
                       email: this.refs.email.value,
                     password: this.refs.password.value
                 }).then(res => {
                     console.log(res);
                     this.refs.email.value = '';
                     this.refs.password.value = '';
+                    this.setState({formToggled: false})
+                    browserHistory.replace(`/dashboard/${res.email}`);
                 })
                 break;
         }

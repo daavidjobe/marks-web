@@ -14,25 +14,18 @@ var app = (0, _express2.default)();
 var PORT = process.env.PORT || 3000;
 
 // using webpack-dev-server and middleware in development environment
-if (process.env.NODE_ENV !== 'production') {
-  var webpackDevMiddleware = require('webpack-dev-middleware');
-  var webpackHotMiddleware = require('webpack-hot-middleware');
-  var webpack = require('webpack');
-  var config = require('/webpack.config');
-  var compiler = webpack(config);
-
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
-  app.use(webpackHotMiddleware(compiler));
-}
+if (process.env.NODE_ENV !== 'production') {}
 
 app.use(_express2.default.static('dist'));
 
 app.get('/', function (request, response) {
-  response.sendFile('/dist/index.html');
+  console.log('hello from /');
+  response.sendFile(__dirname + '/dist/index.html');
 });
 
-app.get('/*', function (request, response) {
-  response.sendFile('/dist/index.html');
+app.get('*', function (request, response) {
+  console.log('hello from *');
+  response.sendFile(__dirname + '/dist/index.html');
 });
 
 app.listen(PORT, function (error) {
