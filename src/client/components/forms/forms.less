@@ -1,24 +1,40 @@
 @import "../../variables.less";
 
-.form-login, .form-signup {
+.user-form {
+    display: flex;
+    flex-wrap: wrap;
     padding: 5px;
     margin: 5px;
+    justify-content: flex-end;
+    .form-group {
+        margin: 5px;
+        flex-basis: 140px;
+        text-align: right;
+        p {
+            font-size: 10px;
+            color: @red;
+            text-align: left;
+        }
+    }
     input {
-        margin: 0 5px;
         outline: none;
         border: none;
         border-bottom: 2px solid @purple;
+        
     }
     input[type="submit"] {
         background: transparent;
         border: 1px solid @purple;
         color: @purple;
-        padding: 5px 15px;
         cursor: pointer;
+        padding: 5px 10px;
         &:hover {
            border: 1px solid lighten(@purple, 15%);
            color: lighten(@purple, 15%);
            transition: all .4s ease-in; 
+        }
+        &:disabled {
+            opacity: .4;
         }
     }
 }

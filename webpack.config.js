@@ -14,7 +14,13 @@ module.exports = {
   devServer: {
     port: 3333,
     contentBase: './dist',
-    inline: true
+    inline: true,
+    proxy: {
+      '/api*': {
+        target: 'http://localhost:4567',
+        secure: false
+      }
+    }
   },
   module: {
     loaders: [

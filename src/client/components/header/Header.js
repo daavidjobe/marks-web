@@ -1,7 +1,6 @@
 import React from 'react';
 import './header.less';
-import LoginForm from '../forms/LoginForm';
-import SignupForm from '../forms/SignupForm';
+import UserForm from '../forms/UserForm';
 
 class Header extends React.Component {
   
@@ -9,17 +8,27 @@ class Header extends React.Component {
     super(props);
     this.state = {
       loginToggled: false,
-      signupToggled: false
+      signupToggled: false,
+      action: ''
     }
   }
   
   
   toggleLogin() {
-    this.setState({loginToggled: !this.state.loginToggled, signupToggled: false});
+    this.setState({
+      loginToggled: true,
+      action: 'sign in',
+      signupToggled: false
+    });
   }
   
   toggleSignup() {
-    this.setState({signupToggled: !this.state.signupToggled, loginToggled: false});
+    console.log('hey');
+    this.setState({
+      signupToggled: true,
+      action: 'sign up',  
+      loginToggled: false
+    });
   }
   
     render() {
@@ -42,8 +51,7 @@ class Header extends React.Component {
             </button>
           </li>
         </ul>
-        {this.state.loginToggled ? <LoginForm /> : <div></div>}
-        {this.state.signupToggled ? <SignupForm /> : <div></div>}
+        {this.state.loginToggled || this.state.signupToggled ? <UserForm action={this.state.action} /> : <div></div>}
         </div>
     )
     }
