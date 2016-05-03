@@ -13,24 +13,38 @@ class Header extends React.Component {
       loginToggled: false,
       signupToggled: false,
       action: '',
-      user: {}
+      user: UserStore.getUser(),
+      buttons: []
     }
   }
-  
+
+   _setButtons() {
+    let buttons = [];
+    if(UserStore.isLoggedIn()) {
+      buttons.push({txt: 'my marks', classList: 'fa', handler: this.logout.bind(this)})
+      buttons.push({txt: 'sign out', classList: 'fa fa-sign-out', handler: this.logout.bind(this)})
+    } else {
+      buttons.push({txt: 'sign in', classList: 'fa fa-sign-in', handler: this.toggleSignin.bind(this)})
+      buttons.push({txt: 'sign up', classList: 'fa fa-user-plus', handler: this.toggleSignup.bind(this)})
+    }
+    this.setState({buttons})
+  }
+
   componentDidMount() {
-        UserStore.addChangeListener(this._onChange.bind(this));
-    }
+    this._setButtons();
+    UserStore.addChangeListener(this._onChange.bind(this));
+  }
     
-    componentWillUnmount() {
-        UserStore.removeChangeListener(this._onChange.bind(this));
-    }
+  componentWillUnmount() {
+    UserStore.removeChangeListener(this._onChange.bind(this));
+  }
     
-    _onChange() {
-        this.setState({user: UserStore.getUser()});
-        console.log(this.state.user.email + " is the user");
-    }
+  _onChange() {
+    this.setState({user: UserStore.getUser()});
+    this._setButtons();
+  }
   
-  toggleLogin() {
+  toggleSignin() {
     this.setState({
       loginToggled: !this.state.loginToggled,
       action: 'sign in',
@@ -52,30 +66,25 @@ class Header extends React.Component {
   
   
     render() {
-      
-      let buttons = UserStore.isLoggedIn() ? 
-          <li><button className="button" onClick={this.logout.bind(this)}>
-            <p><i className="fa fa-sign-out" aria-hidden="true"></i>sign out</p>
-            <div className="underline"></div>
-            </button></li> : (<li>
-           <button className="button" onClick={this.toggleLogin.bind(this)}>
-            <p><i className="fa fa-sign-in" aria-hidden="true"></i>sign in</p>
-            <div className="underline"></div>
+
+      let buttons = this.state.buttons.map((btn, index) => {
+        return (
+            <button key={index} className="button" onClick={btn.handler}>
+              <p><i className={btn.classList} aria-hidden="true"></i>{btn.txt}</p>
+              <div className="underline"></div>
             </button>
-         
-           <button className="button" onClick={this.toggleSignup.bind(this)}>
-            <p><i className="fa fa-user-plus" aria-hidden="true"></i>sign up</p>
-            <div className="underline"></div>
-            </button>
-          </li>);
-          
+          )
+      })  
+
     return (
       <div>
         <ul className="header">
         <li>
           <img src={require('../../../assets/images/marks-logo.png')} width="160" alt="marks logo"/>
           </li>
+          <li>
          {buttons}
+         </li>
         </ul>
         {!this.state.user.authenticated && (this.state.loginToggled || this.state.signupToggled) ? <UserForm action={this.state.action} /> : <div></div>}
         </div>

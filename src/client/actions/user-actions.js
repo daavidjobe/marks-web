@@ -11,7 +11,7 @@ export default {
     dispatch({actionType: UserConstants.REGISTER, user})
     UserAPI.register(user).then(res => {
         if(res.status === 201) {
-            dispatch({actionType: UserConstants.REGISTRATION_COMPLETE, user})
+                dispatch({actionType: UserConstants.REGISTRATION_COMPLETE, user})
         }
     })
   },

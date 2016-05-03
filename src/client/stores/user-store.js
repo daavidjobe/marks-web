@@ -10,9 +10,11 @@ class UserStore extends EventEmitter {
     
     constructor() {
         super();
-        this.user = {};
+        this.user = {
+            authenticated: this.isLoggedIn(),
+            token: this._getToken()
+        }
     }
- 
     
     emitChange() {
         this.emit(CHANGE_EVENT)
@@ -30,11 +32,11 @@ class UserStore extends EventEmitter {
         return this.user;
     }
     
-    setUser() {
+    updateUser() {
         this._setToken()
         this.user = {
             authenticated: this.isLoggedIn(),
-            token: this.getToken()
+            token: this._getToken()
         }
     }
     
@@ -42,7 +44,7 @@ class UserStore extends EventEmitter {
         return !!localStorage.token;
     }
     
-    getToken() {
+    _getToken() {
         return localStorage.token;
     }
     
@@ -52,7 +54,10 @@ class UserStore extends EventEmitter {
     
     logout() {
         delete localStorage.token;
-        this.user = {};
+        this.user = {
+            authentixated: false,
+            token: undefined
+        };
     }
     
 }
@@ -62,10 +67,10 @@ let userStore = new UserStore();
 userStore.dispatchToken = register((action) => {
     switch (action.actionType) {
             case UserConstants.REGISTRATION_COMPLETE:
-                userStore.setUser()
+                userStore.updateUser()
                 break;
             case UserConstants.LOGIN_COMPLETE:
-                userStore.setUser()
+                userStore.updateUser()
                 break;
             case UserConstants.LOGOUT:
                 userStore.logout()
