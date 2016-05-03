@@ -1,9 +1,9 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
-import './header.less';
+import UserStore from '../../stores/user-store';
+import UserActions from '../../actions/user-actions';
 import UserForm from '../forms/UserForm';
-import UserService from '../../services/UserService';
-
+import './header.less';
 
 class Header extends React.Component {
   
@@ -12,9 +12,23 @@ class Header extends React.Component {
     this.state = {
       loginToggled: false,
       signupToggled: false,
-      action: ''
+      action: '',
+      user: {}
     }
   }
+  
+  componentDidMount() {
+        UserStore.addChangeListener(this._onChange.bind(this));
+    }
+    
+    componentWillUnmount() {
+        UserStore.removeChangeListener(this._onChange.bind(this));
+    }
+    
+    _onChange() {
+        this.setState({user: UserStore.getUser()});
+        console.log(this.state.user.email + " is the user");
+    }
   
   toggleLogin() {
     this.setState({
@@ -25,7 +39,6 @@ class Header extends React.Component {
   }
   
   toggleSignup() {
-    console.log('hey');
     this.setState({
       signupToggled: !this.state.signupToggled,
       action: 'sign up',  
@@ -34,14 +47,13 @@ class Header extends React.Component {
   }
   
   logout() {
-    UserService.logout();
-    this.setState({loggedIn: false});
-    browserHistory.replace('/');
+    UserActions.logout();
   }
+  
   
     render() {
       
-      let buttons = UserService.loggedIn() ? 
+      let buttons = UserStore.isLoggedIn() ? 
           <li><button className="button" onClick={this.logout.bind(this)}>
             <p><i className="fa fa-sign-out" aria-hidden="true"></i>sign out</p>
             <div className="underline"></div>
@@ -65,7 +77,7 @@ class Header extends React.Component {
           </li>
          {buttons}
         </ul>
-        {!UserService.loggedIn() && (this.state.loginToggled || this.state.signupToggled) ? <UserForm action={this.state.action} /> : <div></div>}
+        {!this.state.user.authenticated && (this.state.loginToggled || this.state.signupToggled) ? <UserForm action={this.state.action} /> : <div></div>}
         </div>
     )
     }

@@ -2,19 +2,18 @@ import React from 'react';
 import Template from './template';
 import Home from './home/Home';
 import UserDashboard from './dashboard/UserDashboard';
-import UserService from '../services/UserService';
+import UserStore from '../stores/user-store';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
-class App extends React.Component {
+class App extends React.Component {  
   
   requireAuth(nextState, replace) {
-    if (!UserService.loggedIn()) {
+    if (!UserStore.isLoggedIn()) {
       replace({
         pathname: '/',
         state: { nextPathname: nextState.location.pathname }
       })
     }
-
   }
   
   render() {

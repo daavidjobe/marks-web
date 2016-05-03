@@ -1,8 +1,11 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import {validateEmail, validatePassword} from '../../helpers/validation';
-import UserService from '../../services/UserService';
+import UserActions from '../../actions/user-actions';
+import UserStore from '../../stores/user-store';
 import './forms.less';
+
+
 
 class UserForm extends React.Component {
     
@@ -10,9 +13,8 @@ class UserForm extends React.Component {
         super(props)
         this.state = {
             formDisabled: true,
-            formToggled: true,
             emailMessage: '',
-            passwordMessage: '',
+            passwordMessage: ''
         }
     }
     
@@ -22,7 +24,6 @@ class UserForm extends React.Component {
     
      validateEmail() {
         if(validateEmail(this.refs.email.value)) {
-            console.log('valid email');
             this.setState({emailMessage: ''})
             return true;
         } else {
@@ -33,7 +34,6 @@ class UserForm extends React.Component {
     
     validatePassword() {
         if(validatePassword(this.refs.password.value)) {
-            console.log('valid password');
             this.setState({passwordMessage: ''})
             return true;
         } else {
@@ -44,32 +44,17 @@ class UserForm extends React.Component {
     
     handleSubmit(e) {
         e.preventDefault();
+        let user = {email: this.refs.email.value, password: this.refs.password.value};
         switch (this.props.action) {
             case 'sign up':
-                UserService.register({
-                    email: this.refs.email.value,
-                    password: this.refs.password.value
-                }).then(res => {
-                    console.log(res);
-                    this.refs.email.value = '';
-                    this.refs.password.value = '';
-                    this.setState({formToggled: false})
-                    browserHistory.replace(`/dashboard/${res.email}`);
-                })
+                UserActions.register(user);
                 break;
              case 'sign in':
-                UserService.login({
-                      email: this.refs.email.value,
-                    password: this.refs.password.value
-                }).then(res => {
-                    console.log(res);
-                    this.refs.email.value = '';
-                    this.refs.password.value = '';
-                    this.setState({formToggled: false})
-                    browserHistory.replace(`/dashboard/${res.email}`);
-                })
+                UserActions.login(user);
                 break;
         }
+        this.refs.email.value = '';
+        this.refs.password.value = '';
     }
     
     handleChange(e) {
