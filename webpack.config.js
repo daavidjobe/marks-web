@@ -1,12 +1,10 @@
-var webpack = require('webpack');
-var path = require('path');
 
 module.exports = {
   entry: [
    './src/client/index.js' 
   ],
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: './dist',
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -62,9 +60,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ]
+  plugins: []
 };
