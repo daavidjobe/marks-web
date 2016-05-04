@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "webpack -p --config webpack.prod.config.js & npm run build:server",
+    "postinstall": "webpack -p --config webpack.prod.config.js",
     "dev": "webpack-dev-server",
     "build:server": "babel src/server --out-dir .",
     "build:client": "webpack",
