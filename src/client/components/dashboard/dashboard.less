@@ -1,0 +1,36 @@
+@import '../../variables.less';
+@import '../../buttons.less';
+
+.dashboard {
+	display: flex;
+	height: 90vh;
+	flex-wrap: wrap;
+	section, aside {
+		flex-basis: 300px;
+		padding: 5px;
+	}
+	section {
+		flex: 3;
+		border: 1px solid #ccc;
+	}
+	aside {
+		border: 1px solid #ccc;
+		.category-list {
+			display: flex;
+			flex-direction: column;
+			list-style: none;
+			.category-item {
+				display: flex;
+				background: @purple;
+				text-align: center;
+				margin: 5px 0;
+				a {
+					padding: 10px;
+					flex-grow: 1;
+					text-decoration: none;
+					color: #fff;
+				}
+			}
+		}
+	}
+}
