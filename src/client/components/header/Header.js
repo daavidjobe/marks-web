@@ -21,7 +21,7 @@ class Header extends React.Component {
    _setButtons() {
     let buttons = [];
     if(UserStore.isLoggedIn()) {
-      buttons.push({txt: 'my marks', classList: 'fa', handler: this.logout.bind(this)})
+      buttons.push({txt: 'my marks', classList: 'mark-aim', image: 'mark-aim.png' , handler: this.goToDashboard.bind(this)})
       buttons.push({txt: 'sign out', classList: 'fa fa-sign-out', handler: this.logout.bind(this)})
     } else {
       buttons.push({txt: 'sign in', classList: 'fa fa-sign-in', handler: this.toggleSignin.bind(this)})
@@ -59,9 +59,14 @@ class Header extends React.Component {
       loginToggled: false
     });
   }
+
+  goToDashboard() {
+    browserHistory.replace('/dashboard');
+  }
   
   logout() {
     UserActions.logout();
+    browserHistory.replace('/');
   }
   
   
@@ -70,7 +75,10 @@ class Header extends React.Component {
       let buttons = this.state.buttons.map((btn, index) => {
         return (
             <button key={index} className="button" onClick={btn.handler}>
-              <p><i className={btn.classList} aria-hidden="true"></i>{btn.txt}</p>
+              <p>
+              {btn.image? <img className={btn.classList} src={require(`../../../assets/images/${btn.image}`)} width="17" /> :
+              <i className={btn.classList} aria-hidden="true"></i>}
+              {btn.txt}</p>
               <div className="underline"></div>
             </button>
           )

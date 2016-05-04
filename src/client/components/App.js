@@ -8,7 +8,9 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 class App extends React.Component {  
   
   requireAuth(nextState, replace) {
+    console.log('route accepted')
     if (!UserStore.isLoggedIn()) {
+      console.log('route NOT accepted')
       replace({
         pathname: '/',
         state: { nextPathname: nextState.location.pathname }
@@ -21,7 +23,7 @@ class App extends React.Component {
       <Router history={browserHistory}>
         <Route path="/" component={Template}>
         <IndexRoute component={Home}/>
-        <Route path="dashboard/:email" component={UserDashboard} onEnter={this.requireAuth.bind(this)} />
+        <Route path="dashboard" component={UserDashboard} onEnter={this.requireAuth.bind(this)} />
         </Route>
       </Router>
   );
