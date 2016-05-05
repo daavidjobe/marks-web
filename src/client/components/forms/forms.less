@@ -43,19 +43,20 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
 
-.category-form {
-    display: flex;
-    justify-content: center;
+.category-form, .mark-form, .search-container {
     margin: 5px 0;
     input {
-        flex: 6;
         padding: 5px;
         outline: none;
     }
     .fa-plus-circle {
             .btn-add;
-            flex: 1;
-            position: relative;
-            left: 5px;
+            margin: 0 5px;
         }
 }
+
+.mark-form {
+    min-width: 220px;
+}
+
+

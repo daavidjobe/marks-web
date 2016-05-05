@@ -11,10 +11,30 @@
 	}
 	section {
 		flex: 3;
-		border: 1px solid #ccc;
+		.controls {
+			display: flex;
+			justify-content: space-between;
+			border-bottom: 5px solid @purple;
+			padding: 10px 0;
+			margin: 5px 0;
+			.control-item {
+				flex: 1;
+			}
+		}
+		ul {
+			display: flex;
+			flex-direction: column;
+			list-style: none;
+			padding: 0;
+			li {
+				box-shadow: 1px 1px 5px 2px #ccc;
+				margin: 5px 0;
+				padding: 5px;
+			}
+		}
 	}
 	aside {
-		border: 1px solid #ccc;
+		box-shadow: 1px 1px 5px 2px #ccc;
 		.category-list {
 			display: flex;
 			flex-direction: column;
