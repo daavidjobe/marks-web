@@ -2,8 +2,9 @@ import React from 'react';
 
 const CategoryForm = props => (
 				<form className="category-form" onSubmit={props.handleSubmit}>
-					<input type="text" placeholder="category name" min-length="3" max-length="40" />
-					<button type="submit" className="fa fa-plus-circle"></button>
+					<input type="text" onChange={props.handleChange} placeholder="category name" />
+					<button type="submit" disabled={props.isDisabled} className="fa fa-plus-circle"></button>
+					<span>{props.errorMessage}</span>
 				</form>
 			)
 	

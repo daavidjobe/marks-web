@@ -4,17 +4,28 @@ import MarkForm from '../forms/MarkForm';
 import SearchForm from '../forms/SearchForm';
 import CategoryList from '../categories/CategoryList';
 import UserMarkList from '../marks/UserMarkList';
+import UserActions from '../../actions/user-actions';
+import UserStore from '../../stores/user-store';
 import './dashboard.less';
 
 export default class UserDashboard extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			isInvalidCategory: true ,
+			invalidCategoryMessage: ''
+		}
 	}
 
+	componentDidMount() {
+		UserActions.fetchCategories(UserStore.getEmail())
+	}
 
 	addCategory(e) {
 		e.preventDefault();
+		UserActions.addCategory(e.nativeEvent.target[0].value, UserStore.getEmail());
+		e.nativeEvent.target[0].value = '';
 	}
 
 	addMark(e) {
@@ -24,12 +35,24 @@ export default class UserDashboard extends React.Component {
 	filterMarks(e) {
 
 	}
+	
+	validateCategory(e) {
+		let value = e.nativeEvent.target.value;
+		if(value.length === 0) {
+			this.setState({invalidCategoryMessage: '', isInvalidCategory: true})
+		} else if(value.length < 3) {
+			this.setState({invalidCategoryMessage: 'to short.', isInvalidCategory: true})
+		} else if(value.length > 30) {
+			this.setState({invalidCategoryMessage: 'to long.', isInvalidCategory: true})
+		} else {
+			this.setState({invalidCategoryMessage: '', isInvalidCategory: false})
+		}
+	}
 
 	render() {
 		return (
 				<div className="dashboard">
-					<section>
-						<div className="controls">
+					<div className="controls">
 							<div className="control-item">
 								<MarkForm handleSubmit={this.addMark.bind(this)}/>
 							</div>
@@ -37,13 +60,19 @@ export default class UserDashboard extends React.Component {
 								<SearchForm handleSearch={this.filterMarks.bind(this)} />
 							</div>
 						</div>
-						<UserMarkList />
-					</section>
-					<aside>
-						<h2>categories</h2>
-						<CategoryForm handleSubmit={this.addCategory.bind(this)} />
-						<CategoryList />
-					</aside>	
+					<div className="dashboard-content">
+						<section>
+							<UserMarkList />
+						</section>
+						<aside>
+							<h2>categories</h2>
+							<CategoryForm isDisabled={this.state.isInvalidCategory}
+							errorMessage={this.state.invalidCategoryMessage}
+							handleChange={this.validateCategory.bind(this)}
+							handleSubmit={this.addCategory.bind(this)} />
+							<CategoryList />
+						</aside>	
+					</div>
 				</div>
 			)
 	}

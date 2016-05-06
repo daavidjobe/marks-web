@@ -1,45 +1,7 @@
 import React from 'react';
 import Mark from './Mark';
-
-
-const marks = [
-	{
-		url: 'https://cymarks.com',
-		created: '2016-01-01'
-	},
-	{
-		url: 'https://enigio.com',
-		created: '2016-01-01'
-	},
-	{
-		url: 'https://timebeat.com',
-		created: '2016-01-01'
-	},
-	{
-		url: 'https://cymarks.com',
-		created: '2016-01-01'
-	},
-	{
-		url: 'https://enigio.com',
-		created: '2016-01-01'
-	},
-	{
-		url: 'https://timebeat.com',
-		created: '2016-01-01'
-	},
-	{
-		url: 'https://cymarks.com',
-		created: '2016-01-01'
-	},
-	{
-		url: 'https://enigio.com',
-		created: '2016-01-01'
-	},
-	{
-		url: 'https://timebeat.com',
-		created: '2016-01-01'
-	}
-]
+import UserStore from '../../stores/user-store';
+import UserActions from '../../actions/user-actions';
 
 
 export default class UserMarkList extends React.Component {
@@ -47,12 +9,24 @@ export default class UserMarkList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    	marks
+    	marks: []
     }
+  }
+	
+	 componentDidMount() {
+    UserStore.addChangeListener(this._onChange.bind(this));
+		UserActions.fetchMarks(UserStore.getEmail())
+  }
+  
+  componentWillUnmount() {
+    UserStore.removeChangeListener(this._onChange.bind(this));
+  }
+  
+  _onChange() {
+    this.setState({marks: UserStore.getMarks()});
   }
 
   render() {
-
   	let marks = this.state.marks.map((mark, index) => {
   		return <Mark key={index} mark={mark} />
   	})

@@ -10,6 +10,8 @@ class UserStore extends EventEmitter {
     
     constructor() {
         super();
+        this.categories = [];
+        this.marks = [];
         this.user = {
             authenticated: this.isLoggedIn(),
             token: this._getToken()
@@ -32,12 +34,18 @@ class UserStore extends EventEmitter {
         return this.user;
     }
     
-    updateUser() {
-        this._setToken()
+    getEmail() {
+        return localStorage.getItem('user');
+    }
+    
+    updateUser(usr) {
+        this._setToken();
+        localStorage.setItem('user', usr.email);
         this.user = {
             authenticated: this.isLoggedIn(),
             token: this._getToken()
         }
+        console.log(this.user);
     }
     
     isLoggedIn() {
@@ -54,26 +62,65 @@ class UserStore extends EventEmitter {
     
     logout() {
         delete localStorage.token;
+        localStorage.removeItem('user');
         this.user = {
-            authentixated: false,
+            authenticated: false,
             token: undefined
         };
+    }
+
+    setCategories(categories) {
+        this.categories = categories;
+    }
+
+    getCategories() {
+        return this.categories;
+    }
+    
+    addCategory(categoryName) {
+        let categories = [...this.categories, {name: categoryName}];
+        this.categories = categories;
+    }
+    
+    removeCategory(categoryName) {
+        let updated = this.categories.filter(c => c.name !== categoryName);
+        this.categories = updated;
+    }
+    
+    setMarks(marks) {
+        this.marks = marks;
+    }
+    
+    getMarks() {
+        return this.marks;
     }
     
 }
     
-
+    
 let userStore = new UserStore();
 userStore.dispatchToken = register((action) => {
     switch (action.actionType) {
             case UserConstants.REGISTRATION_COMPLETE:
-                userStore.updateUser()
+                userStore.updateUser(action.user)
                 break;
             case UserConstants.LOGIN_COMPLETE:
-                userStore.updateUser()
+                userStore.updateUser(action.user)
                 break;
             case UserConstants.LOGOUT:
                 userStore.logout()
+                break;
+            case UserConstants.FETCH_CATEGORIES:
+                userStore.setCategories(action.categories)
+                break;
+            case UserConstants.ADD_CATEGORY:
+                userStore.addCategory(action.categoryName)
+                break;
+            case UserConstants.REMOVE_CATEGORY:
+                userStore.removeCategory(action.categoryName)
+                break;
+            case UserConstants.FETCH_MARKS:
+                userStore.setMarks(action.marks)
                 break;
         }
         userStore.emitChange();
