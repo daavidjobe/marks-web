@@ -12,3 +12,13 @@ export let validatePassword = password => {
 export let validateEmail = email => {
     return patterns.emailRegex.test(email);
 }
+
+export let validateCategory = categoryName => {
+        if(categoryName.length < 2) {
+            return {valid: false, message: 'to short'}
+		} else if(categoryName.length > 30) {
+			return {valid: false, message: 'to long'}
+		} else {
+			return {valid: true, message: ''}
+		}
+}

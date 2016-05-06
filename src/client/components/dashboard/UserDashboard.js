@@ -6,6 +6,7 @@ import CategoryList from '../categories/CategoryList';
 import UserMarkList from '../marks/UserMarkList';
 import UserActions from '../../actions/user-actions';
 import UserStore from '../../stores/user-store';
+import {validateCategory} from '../../helpers/validation';
 import './dashboard.less';
 
 export default class UserDashboard extends React.Component {
@@ -13,7 +14,7 @@ export default class UserDashboard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isInvalidCategory: true ,
+			isValidCategory: true,
 			invalidCategoryMessage: ''
 		}
 	}
@@ -24,8 +25,16 @@ export default class UserDashboard extends React.Component {
 
 	addCategory(e) {
 		e.preventDefault();
-		UserActions.addCategory(e.nativeEvent.target[0].value, UserStore.getEmail());
-		e.nativeEvent.target[0].value = '';
+		let categoryName = e.nativeEvent.target[0].value;
+		let verdict = validateCategory(categoryName);
+		let exists = UserStore.getCategories().filter(c => c.name === categoryName).length > 0;
+		if(exists === true) {
+			this.setState({invalidCategoryMessage: 'exists.'});
+		}
+		if(verdict.valid === true && !exists) {
+			UserActions.addCategory(categoryName, UserStore.getEmail());
+			e.nativeEvent.target[0].value = '';
+		}
 	}
 
 	addMark(e) {
@@ -37,16 +46,9 @@ export default class UserDashboard extends React.Component {
 	}
 	
 	validateCategory(e) {
-		let value = e.nativeEvent.target.value;
-		if(value.length === 0) {
-			this.setState({invalidCategoryMessage: '', isInvalidCategory: true})
-		} else if(value.length < 3) {
-			this.setState({invalidCategoryMessage: 'to short.', isInvalidCategory: true})
-		} else if(value.length > 30) {
-			this.setState({invalidCategoryMessage: 'to long.', isInvalidCategory: true})
-		} else {
-			this.setState({invalidCategoryMessage: '', isInvalidCategory: false})
-		}
+		let categoryName = e.nativeEvent.target.value;
+		let verdict = validateCategory(categoryName);
+		this.setState({isValidCategory: verdict.valid, invalidCategoryMessage: verdict.message})
 	}
 
 	render() {
@@ -66,7 +68,7 @@ export default class UserDashboard extends React.Component {
 						</section>
 						<aside>
 							<h2>categories</h2>
-							<CategoryForm isDisabled={this.state.isInvalidCategory}
+							<CategoryForm 
 							errorMessage={this.state.invalidCategoryMessage}
 							handleChange={this.validateCategory.bind(this)}
 							handleSubmit={this.addCategory.bind(this)} />
