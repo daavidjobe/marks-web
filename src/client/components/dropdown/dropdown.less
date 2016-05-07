@@ -1,0 +1,44 @@
+@import '../../variables.less'; 
+
+.dropdown {
+    position: relative;
+    .arrow {
+        color: @purple;
+        margin-left: 5px;
+        margin-top: 1px;
+    }
+    .dropdown-list {
+        z-index: 10;
+        display: none;
+        position: absolute;
+        box-shadow: 1px 1px 1px #ccc;
+      
+        li {
+            border: none;
+            background: #fff;
+            box-shadow: none;
+            margin: 0;
+            cursor: pointer;
+            &:not(:last-child) {
+                border-bottom: 1px solid #ccc;
+            }
+            &:hover {
+                background: @purple;
+                color: #fff;
+                transition: all .5s ease-out;
+            }
+        }
+        &:hover {
+            display: block !important;
+        }
+    }
+    
+    &:hover {
+        .dropdown-list {
+            display: block !important;   
+        }
+        .arrow {
+            color: lighten(@purple, 10%);
+        }
+    }
+}

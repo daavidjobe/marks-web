@@ -4,39 +4,25 @@
     list-style: none;
     padding: 0;
     display: flex;
-    flex-direction: row;
+   
     justify-content: space-between;
     flex-wrap: wrap;
     flex-grow: 4;
     .mark-item {
         display: flex;
-        position: relative;
-        flex-direction: column;
+        justify-content: space-between;
         padding: 10px;
-        margin: 5px;
-        max-height: 170px;
-        flex: 1 200px;
-        a, p, .fa {
-            color: #fff;
-        }
-        .fa {
-            font-size: 20px;
-        }
-        .timestamp {
-            position: absolute;
-            bottom: 5px;
-        }
-        .social {
-            margin-top: 5px;
-            .fa {
-                padding: 5px;
+        .btn-remove {
+            color: @purple;
+            background: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 5px;
+            &:hover {
+                color: @red;
+                transition: all .4s ease-in;
             }
-        }
-        &:nth-child(odd) {
-            background: lighten(@purple, 25%);
-        }
-        &:nth-child(even) {
-            background: lighten(@purple, 10%);
         }
     }
 }

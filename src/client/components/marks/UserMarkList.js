@@ -1,7 +1,8 @@
 import React from 'react';
-import Mark from './Mark';
+import UserMark from './UserMark';
 import UserStore from '../../stores/user-store';
 import UserActions from '../../actions/user-actions';
+import MarkActions from '../../actions/mark-actions';
 
 
 export default class UserMarkList extends React.Component {
@@ -25,14 +26,27 @@ export default class UserMarkList extends React.Component {
   _onChange() {
     this.setState({marks: UserStore.getMarks()});
   }
+	
+	removeMark(mark) {
+		MarkActions.removeMark(mark);
+	}
+	
+	addToCategory(categoryName, mark) {
+		console.log(categoryName);
+		console.log(mark);
+		UserActions.addMarkToCategory(mark, categoryName, UserStore.getEmail());
+		UserStore.getMarks();
+	}
 
   render() {
-  	let marks = this.state.marks.map((mark, index) => {
-  		return <Mark key={index} mark={mark} />
+		
+  	let marks = this.state.marks.map(mark => {
+  		return <UserMark handleRemove={this.removeMark.bind(this, mark)} key={mark.id}
+			categories={UserStore.getCategories()} addToCategory={this.addToCategory.bind(this)} mark={mark} />
   	})
 
     return (
-      <ul>
+      <ul className="marks">
       	{marks}
       </ul>
     );

@@ -1,5 +1,6 @@
 import {dispatch, register} from '../dispatchers/dispatcher';
 import UserConstants from '../constants/user-constants';
+import MarkConstants from '../constants/mark-constants';
 import {EventEmitter} from 'events';
 import UserAPI from '../api/user-api';
 
@@ -12,10 +13,7 @@ class UserStore extends EventEmitter {
         super();
         this.categories = [];
         this.marks = [];
-        this.user = {
-            authenticated: this.isLoggedIn(),
-            token: this._getToken()
-        }
+        this.user = {authenticated: this.isLoggedIn(), token: this._getToken()}
     }
     
     emitChange() {
@@ -87,12 +85,39 @@ class UserStore extends EventEmitter {
         this.categories = updated;
     }
     
+    assignMarksToCategories() {
+       if(this.categories.length > 0 && this.marks.length > 0) {
+            let assignedList = this.marks.map(mark => {
+                let cat = this.categories.filter(c => c.urls.indexOf(mark.url) !== -1)[0]
+                mark.category = cat.name;
+                return mark;
+            })
+            this.marks = assignedList;
+       }
+    }
+    
     setMarks(marks) {
         this.marks = marks;
     }
     
     getMarks() {
         return this.marks;
+    }
+    
+    addMark(mark) {
+        let marks = [...this.marks, mark];
+        this.marks = marks;
+    }
+    
+    removeMark(mark) {
+        let updated = this.marks.filter(m => m.url !== mark.url);
+        this.marks = updated;
+    }
+    
+    addToCategory(mark, categoryName) {
+        console.log('from store')
+        console.log(mark ,categoryName);
+        console.log(this.categories);
     }
     
 }
@@ -112,6 +137,7 @@ userStore.dispatchToken = register((action) => {
                 break;
             case UserConstants.FETCH_CATEGORIES:
                 userStore.setCategories(action.categories)
+                userStore.assignMarksToCategories()
                 break;
             case UserConstants.ADD_CATEGORY:
                 userStore.addCategory(action.categoryName)
@@ -121,6 +147,13 @@ userStore.dispatchToken = register((action) => {
                 break;
             case UserConstants.FETCH_MARKS:
                 userStore.setMarks(action.marks)
+                userStore.assignMarksToCategories()
+                break;
+            case MarkConstants.ADD_MARK:
+                userStore.addMark(action.data)
+                break;
+            case MarkConstants.REMOVE_MARK:
+                userStore.removeMark(action.data)
                 break;
         }
         userStore.emitChange();

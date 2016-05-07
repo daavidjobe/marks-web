@@ -55,5 +55,13 @@ export default {
       console.log(res);
       dispatch({actionType: UserConstants.REMOVE_CATEGORY, categoryName})
     })
+  },
+  
+  addMarkToCategory(mark, categoryName, email) {
+    UserAPI.addMarkToCategory(mark, categoryName, email)
+    .then(res => {
+      console.log(res);
+      this.fetchCategories(email);
+    })
   }
 }

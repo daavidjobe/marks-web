@@ -13,7 +13,7 @@ export default class CategoryList extends React.Component {
 	}
 
 	componentDidMount() {
-    
+    	UserActions.fetchCategories(UserStore.getEmail())
     	UserStore.addChangeListener(this._onChange.bind(this));
   	}
   

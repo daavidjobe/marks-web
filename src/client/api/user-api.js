@@ -41,5 +41,14 @@ export default {
       console.log(`removeCategory(${categoryName}, ${email})`)
       return fetch(`/api/users/removeCategory/${categoryName}?email=${email}`, {method: 'POST'})
         then(res => res.json())
+  },
+  
+  addMarkToCategory(mark, categoryName, email) {
+      console.log(`addMarkToCategory(${mark}, ${categoryName}, ${email}`)
+      return fetch(`/api/users/addMarkToCategory/${categoryName}?email=${email}`, {
+          method: 'PUT',
+          body: JSON.stringify(mark)
+      })
+      .then(res => res.json())
   }
 }
