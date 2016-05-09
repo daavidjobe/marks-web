@@ -127,6 +127,10 @@ class UserStore extends EventEmitter {
         console.log(this.categories);
     }
     
+    assignMetaToMark(meta, mark) {
+        console.log(`assignMetaToMark(${meta}, ${mark})`)
+    }
+    
 }
     
     
@@ -161,6 +165,9 @@ userStore.dispatchToken = register((action) => {
                 break;
             case MarkConstants.REMOVE_MARK:
                 userStore.removeMark(action.data)
+                break;
+            case MarkConstants.FETCH_MARK_META:
+                userStore.assignMetaToMark(action.meta, action.mark)
                 break;
         }
         userStore.emitChange();

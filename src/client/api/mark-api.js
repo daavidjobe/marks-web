@@ -22,4 +22,17 @@ export default {
           return res.json()
       })
   },
+  
+  fetchMarkMeta: function(mark) {
+      console.log(`fetchMarkMeta(${mark}`)
+      return fetch(`/api/marks/fetchMarkMeta`, {
+        method: 'POST',
+        body: JSON.stringify(mark)
+      })
+      .then(res => {
+        console.log(res);
+        return res.json();
+      })
+  }
 }
+

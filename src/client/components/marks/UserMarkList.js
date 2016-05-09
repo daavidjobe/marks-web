@@ -28,8 +28,9 @@ export default class UserMarkList extends React.Component {
   	let list = this.props.filter === undefined ? this.props.marks :
 		this.props.marks.filter(mark => mark.category === this.props.filter);
 		
-		let marks = list.map(mark => {
-  		return <UserMark handleRemove={this.removeMark.bind(this, mark)} key={mark.id}
+		let marks = list.map((mark, index) => {
+  		return <UserMark handleRemove={this.removeMark.bind(this, mark)} key={index}
+			defaultImage='http://placehold.it/133x100/7b6b99/FFFFFF'
 			removeFromCategory={this.removeFromCategory.bind(this)} categories={UserStore.getCategories()}
 			addToCategory={this.addToCategory.bind(this)} mark={mark} />
   	})

@@ -1,5 +1,6 @@
 import React from 'react';
 import Dropdown from '../dropdown/Dropdown';
+import moment from 'moment';
 
 
 const UserMark = props => {
@@ -11,11 +12,11 @@ const UserMark = props => {
         
         return (
             <li className="mark-item">
+                <img id="img" src={'data:image/jpeg;base64,' + props.mark.thumbnail}
+                alt={`screenshot of ${props.mark.url}`} onError={(img) => console.log(img.nativeEvent.target.src = props.defaultImage)} />
+                <p className="timestamp">created: {moment(props.mark.creationDate, 'MMMM Do YYYY, h:mm:ss a').fromNow()}</p>
                 <div className="col">
                     <a target="_BLANK" href={props.mark.url}>{props.mark.url}</a>
-                </div>
-                <div className="col timestamp">
-                    <p>created: {props.mark.creationDate}</p>
                 </div>
                 <div className="col">
                     <Dropdown title={props.mark.category}>
