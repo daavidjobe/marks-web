@@ -88,8 +88,13 @@ class UserStore extends EventEmitter {
     assignMarksToCategories() {
        if(this.categories.length > 0 && this.marks.length > 0) {
             let assignedList = this.marks.map(mark => {
-                let cat = this.categories.filter(c => c.urls.indexOf(mark.url) !== -1)[0]
-                mark.category = cat.name;
+                let cat = this.categories.filter(c => c.urls.indexOf(mark.url) !== -1)[0];
+                console.log(cat);
+                if(cat === undefined) {
+                    mark.category = 'category';
+                } else {
+                    mark.category = cat.name;
+                }
                 return mark;
             })
             this.marks = assignedList;
@@ -104,7 +109,9 @@ class UserStore extends EventEmitter {
         return this.marks;
     }
     
+    
     addMark(mark) {
+        mark.category = 'category';
         let marks = [...this.marks, mark];
         this.marks = marks;
     }

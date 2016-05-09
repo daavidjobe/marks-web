@@ -14,12 +14,18 @@ module.exports = {
     contentBase: './dist',
     inline: true,
     historyApiFallback: true,
-    proxy: {
-      '/api*': {
+    proxy: [
+      {
+        path: '/api*',
         target: 'http://localhost:4567',
         secure: false
+      },
+      {
+        path: '/scraper*',
+        target: 'http://localhost:8181',
+        secure: false
       }
-    }
+    ]
   },
   module: {
     loaders: [

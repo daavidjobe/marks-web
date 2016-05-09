@@ -9,22 +9,6 @@ export default class UserMarkList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-    	marks: []
-    }
-  }
-	
-	 componentDidMount() {
-    UserStore.addChangeListener(this._onChange.bind(this));
-		UserActions.fetchMarks(UserStore.getEmail())
-  }
-  
-  componentWillUnmount() {
-    UserStore.removeChangeListener(this._onChange.bind(this));
-  }
-  
-  _onChange() {
-    this.setState({marks: UserStore.getMarks()});
   }
 	
 	removeMark(mark) {
@@ -32,18 +16,24 @@ export default class UserMarkList extends React.Component {
 	}
 	
 	addToCategory(categoryName, mark) {
-		console.log(categoryName);
-		console.log(mark);
 		UserActions.addMarkToCategory(mark, categoryName, UserStore.getEmail());
-		UserStore.getMarks();
+	}
+	
+	removeFromCategory(mark) {
+		UserActions.removeMarkFromCategory(mark, mark.category, UserStore.getEmail());
 	}
 
   render() {
 		
-  	let marks = this.state.marks.map(mark => {
+  	let list = this.props.filter === undefined ? this.props.marks :
+		this.props.marks.filter(mark => mark.category === this.props.filter);
+		
+		let marks = list.map(mark => {
   		return <UserMark handleRemove={this.removeMark.bind(this, mark)} key={mark.id}
-			categories={UserStore.getCategories()} addToCategory={this.addToCategory.bind(this)} mark={mark} />
+			removeFromCategory={this.removeFromCategory.bind(this)} categories={UserStore.getCategories()}
+			addToCategory={this.addToCategory.bind(this)} mark={mark} />
   	})
+		
 
     return (
       <ul className="marks">

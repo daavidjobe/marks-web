@@ -63,5 +63,13 @@ export default {
       console.log(res);
       this.fetchCategories(email);
     })
+  },
+  
+  removeMarkFromCategory(mark, categoryName, email) {
+    UserAPI.removeMarkFromCategory(mark, categoryName, email)
+    .then(res => {
+      console.log(res);
+      this.fetchCategories(email);
+    })
   }
 }

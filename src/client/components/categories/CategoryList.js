@@ -25,9 +25,6 @@ export default class CategoryList extends React.Component {
     	this.setState({categories: UserStore.getCategories()});
   	}
 	  
-	handleClick() {
-		console.log('category clicked');
-	}
 	
 	handleDelete(categoryName) {
 		UserActions.removeCategory(categoryName, UserStore.getEmail());
@@ -36,13 +33,15 @@ export default class CategoryList extends React.Component {
 	render() {
 
 		let categories = this.state.categories.map((category, index) => {
-			return <CategoryItem handleClick={this.handleClick.bind(this)}
+			return <CategoryItem handleClick={this.props.filter.bind(null, category.name)}
 			handleDelete={this.handleDelete.bind(this, category.name)} category={category} key={index} />
 		})
 
 
 		return (
 		  <ul className="category-list">
+		  	<CategoryItem handleClick={this.props.filter.bind(null, undefined)}
+			category={{name: 'all'}} />
 		  	{categories}
 		  </ul>
 		)

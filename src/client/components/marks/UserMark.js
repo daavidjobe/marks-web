@@ -11,12 +11,21 @@ const UserMark = props => {
         
         return (
             <li className="mark-item">
-                <a href={props.mark.url}>{props.mark.url}</a>
-                <p className="timestamp">created: {props.mark.creationDate}</p>
-                 <Dropdown title={props.mark.category}>
-                     {categories}
-                </Dropdown>
-                <button onClick={props.handleRemove} className="fa fa-minus-circle btn-remove"></button>
+                <div className="col">
+                    <a target="_BLANK" href={props.mark.url}>{props.mark.url}</a>
+                </div>
+                <div className="col timestamp">
+                    <p>created: {props.mark.creationDate}</p>
+                </div>
+                <div className="col">
+                    <Dropdown title={props.mark.category}>
+                    <li onClick={props.removeFromCategory.bind(null, props.mark)}>none</li>
+                         {categories}
+                    </Dropdown>
+                </div>
+                <div className="col">
+                    <button onClick={props.handleRemove} className="fa fa-minus-circle btn-remove"></button>
+                </div>
             </li>
         )
   

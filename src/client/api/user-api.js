@@ -50,5 +50,14 @@ export default {
           body: JSON.stringify(mark)
       })
       .then(res => res.json())
+  },
+  
+  removeMarkFromCategory(mark, categoryName, email) {
+      console.log(`removeMarkFromCategory(${mark}, ${categoryName}, ${email})`)
+      return fetch(`/api/users/removeMarkFromCategory/${categoryName}?email=${email}`, {
+          method: 'PUT',
+          body: JSON.stringify(mark)
+      })
+      .then(res => res.json())
   }
 }

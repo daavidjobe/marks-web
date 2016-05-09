@@ -1,7 +1,7 @@
 import React from 'react';
+import Search from 'react-search'
 import CategoryForm from '../forms/CategoryForm';
 import MarkForm from '../forms/MarkForm';
-import SearchForm from '../forms/SearchForm';
 import CategoryList from '../categories/CategoryList';
 import UserMarkList from '../marks/UserMarkList';
 import UserActions from '../../actions/user-actions';
@@ -11,6 +11,9 @@ import {validateCategory, validateUrl} from '../../helpers/validation';
 import {formatUrl} from '../../helpers/utils';
 import './dashboard.less';
 
+
+let KEYS = ['url']
+
 export default class UserDashboard extends React.Component {
 
 	constructor(props) {
@@ -18,12 +21,15 @@ export default class UserDashboard extends React.Component {
 		this.state = {
 			isValidCategory: true,
 			invalidCategoryMessage: '',
-			markErrorMessage: ''
+			markErrorMessage: '',
+			marks: [],
+			filter: undefined
 		}
 	}
 	
 	componentDidMount() {
     	UserStore.addChangeListener(this._onChange.bind(this));
+		UserActions.fetchMarks(UserStore.getEmail())
   	}
   
   	componentWillUnmount() {
@@ -31,7 +37,7 @@ export default class UserDashboard extends React.Component {
   	}
   
   	_onChange() {
-		  	
+    	this.setState({marks: UserStore.getMarks()});
   	}
 
 	addCategory(e) {
@@ -65,8 +71,8 @@ export default class UserDashboard extends React.Component {
 		}
 	}
 
-	filterMarks(e) {
-
+	filterMarks(categoryName) {
+		this.setState({filter: categoryName});
 	}
 	
 	validateCategory(e) {
@@ -90,19 +96,19 @@ export default class UserDashboard extends React.Component {
 		return (
 				<div className="dashboard">
 					<div className="controls">
+						<div className="control-item">
+							<h1>dashboard</h1>		
+							</div>
 							<div className="control-item">
 								<MarkForm errorMessage={this.state.markErrorMessage}
 								handleChange={this.validateUrl.bind(this)}
 								handleSubmit={this.addMark.bind(this)}/>
 							</div>
-							<div className="control-item">
-								<SearchForm handleSearch={this.filterMarks.bind(this)} />
-							</div>
 						</div>
 						
 					<div className="dashboard-content">
 						<section>
-							<UserMarkList />
+							<UserMarkList filter={this.state.filter} marks={this.state.marks} />
 						</section>
 						<aside>
 							<h2>categories</h2>
@@ -110,7 +116,7 @@ export default class UserDashboard extends React.Component {
 							errorMessage={this.state.invalidCategoryMessage}
 							handleChange={this.validateCategory.bind(this)}
 							handleSubmit={this.addCategory.bind(this)} />
-							<CategoryList />
+							<CategoryList filter={this.filterMarks.bind(this)} />
 						</aside>	
 					</div>
 				</div>
