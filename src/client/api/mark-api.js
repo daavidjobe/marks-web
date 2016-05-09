@@ -25,7 +25,7 @@ export default {
   
   fetchMarkMeta: function(mark) {
       console.log(`fetchMarkMeta(${mark}`)
-      return fetch(`/api/marks/fetchMarkMeta`, {
+      return fetch('/api/marks/fetchMarkMeta', {
         method: 'POST',
         body: JSON.stringify(mark)
       })
@@ -33,6 +33,12 @@ export default {
         console.log(res);
         return res.json();
       })
+  },
+  
+  fetchPublicMarks: function() {
+      console.log('fetchPublicMarks()')
+      return fetch('/api/marks/findPublishedMarks')
+      .then(res => res.json())
   }
 }
 

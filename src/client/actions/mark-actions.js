@@ -1,5 +1,5 @@
 import MarkConstants from '../constants/mark-constants';
-import {dispatch, register} from '../dispatchers/dispatcher';
+import {dispatch} from '../dispatchers/dispatcher';
 import MarkAPI from '../api/mark-api';
 
 export default {
@@ -20,6 +20,12 @@ export default {
     fetchMarkMeta(mark) {
         MarkAPI.fetchMarkMeta(mark).then(res => {
             dispatch({actionType: MarkConstants.FETCH_MARK_META, meta: res, mark})
+        })
+    },
+    
+    fetchPublicMarks() {
+        MarkAPI.fetchPublicMarks().then(marks => {
+            dispatch({actionType: MarkConstants.FETCH_PUBLISHED_MARKS, marks})
         })
     }
 }

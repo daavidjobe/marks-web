@@ -8,7 +8,9 @@
     justify-content: space-between;
     flex-wrap: wrap;
     flex-grow: 4;
-    .mark-item {
+}
+
+   .mark-item {
         flex: 1;
         display: flex;
         position: relative;
@@ -60,5 +62,17 @@
                 transition: all .4s ease-in;
             }
         }
+    }
+
+.public-marks {
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    flex: 1;
+    .public-mark-item {
+        .mark-item;
+        flex: 0;
+        margin: 5px;
+        box-shadow: @shadow;
     }
 }

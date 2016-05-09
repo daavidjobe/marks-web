@@ -23,7 +23,8 @@ export default class UserDashboard extends React.Component {
 			invalidCategoryMessage: '',
 			markErrorMessage: '',
 			marks: [],
-			filter: undefined
+			filter: undefined,
+			activeCategory: false,
 		}
 	}
 	
@@ -65,14 +66,14 @@ export default class UserDashboard extends React.Component {
 			if(exists) {
 				this.setState({markErrorMessage: 'already added.'})
 			} else {
-				MarkActions.addMark(url, UserStore.getEmail());	
+				MarkActions.addMark(url, UserStore.getEmail());
 			}
 			e.nativeEvent.target[0].value = ''; 
 		}
 	}
 
 	filterMarks(categoryName) {
-		this.setState({filter: categoryName});
+		this.setState({filter: categoryName, activeCategory: !this.state.activeCategory});
 	}
 	
 	validateCategory(e) {
@@ -116,7 +117,7 @@ export default class UserDashboard extends React.Component {
 							errorMessage={this.state.invalidCategoryMessage}
 							handleChange={this.validateCategory.bind(this)}
 							handleSubmit={this.addCategory.bind(this)} />
-							<CategoryList filter={this.filterMarks.bind(this)} />
+							<CategoryList active={this.state.activeCategory} filter={this.filterMarks.bind(this)} />
 						</aside>	
 					</div>
 				</div>

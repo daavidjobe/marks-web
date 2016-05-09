@@ -29,6 +29,7 @@ export default class CategoryList extends React.Component {
 	handleDelete(categoryName) {
 		UserActions.removeCategory(categoryName, UserStore.getEmail());
 	}
+	
 
 	render() {
 

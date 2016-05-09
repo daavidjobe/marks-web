@@ -86,19 +86,17 @@ class UserStore extends EventEmitter {
     }
     
     assignMarksToCategories() {
-       if(this.categories.length > 0 && this.marks.length > 0) {
-            let assignedList = this.marks.map(mark => {
-                let cat = this.categories.filter(c => c.urls.indexOf(mark.url) !== -1)[0];
-                console.log(cat);
-                if(cat === undefined) {
-                    mark.category = 'category';
-                } else {
-                    mark.category = cat.name;
-                }
-                return mark;
-            })
-            this.marks = assignedList;
-       }
+       let assignedList = this.marks.map(mark => {
+         let cat = this.categories.filter(c => c.urls.indexOf(mark.url) !== -1)[0];
+         console.log(cat);
+         if(cat === undefined) {
+           mark.category = 'category';
+         } else {
+           mark.category = cat.name;
+         }
+         return mark;
+       })
+      this.marks = assignedList;
     }
     
     setMarks(marks) {
@@ -117,18 +115,14 @@ class UserStore extends EventEmitter {
     }
     
     removeMark(mark) {
-        let updated = this.marks.filter(m => m.url !== mark.url);
-        this.marks = updated;
-    }
-    
-    addToCategory(mark, categoryName) {
-        console.log('from store')
-        console.log(mark ,categoryName);
-        console.log(this.categories);
+        this.marks = this.marks.filter(m => m.url !== mark.url);;
     }
     
     assignMetaToMark(meta, mark) {
-        console.log(`assignMetaToMark(${meta}, ${mark})`)
+        let marks = this.marks.filter(m => m.url !== mark.url);
+        mark.thumbnail = meta.thumbnail;
+        mark.tags = meta.tags;
+        this.marks = [...marks, mark];
     }
     
 }

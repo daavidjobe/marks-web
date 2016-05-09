@@ -3,6 +3,7 @@ import UserMark from './UserMark';
 import UserStore from '../../stores/user-store';
 import UserActions from '../../actions/user-actions';
 import MarkActions from '../../actions/mark-actions';
+import './marks.less';
 
 
 export default class UserMarkList extends React.Component {
