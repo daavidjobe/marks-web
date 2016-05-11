@@ -131,9 +131,6 @@ class UserStore extends EventEmitter {
 let userStore = new UserStore();
 userStore.dispatchToken = register((action) => {
     switch (action.actionType) {
-            case UserConstants.REGISTRATION_COMPLETE:
-                userStore.updateUser(action.user)
-                break;
             case UserConstants.LOGIN_COMPLETE:
                 userStore.updateUser(action.user)
                 break;

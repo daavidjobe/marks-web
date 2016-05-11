@@ -1,22 +1,17 @@
 import 'whatwg-fetch';
 
 export default {
-  register: function(user) {
-      console.log(`register(${user.email})`)
-      return fetch('/api/users/signup', {
-          method: 'POST',
-          body: JSON.stringify(user)
-      })
-      .then(res => {return {data: res.json(), status: res.status}})
-  },
 
-  login: function(user) {
-      console.log(`login(${user.email})`)
-      return fetch('/api/users/login', {
+  signin: function(user) {
+      console.log(`signin(${user.email})`)
+      return fetch('/api/users/signin', {
           method: 'POST',
+          headers: new Headers({
+            'Authorization': 'Basic bWFya3Mtd2ViOm1hcmtlcg=='
+          }),
           body: JSON.stringify(user)
       })
-      .then(res => {return {data: res.json(), status: res.status}})
+      .then(res => res.json())
   },
 
   fetchCategories: function(email) {
@@ -47,6 +42,9 @@ export default {
       console.log(`addMarkToCategory(${mark}, ${categoryName}, ${email}`)
       return fetch(`/api/users/addMarkToCategory/${categoryName}?email=${email}`, {
           method: 'PUT',
+          headers: new Headers({
+            'Authorization': 'Basic bWFya3Mtd2ViOm1hcmtlcg=='
+          }),
           body: JSON.stringify(mark)
       })
       .then(res => res.json())
@@ -56,6 +54,9 @@ export default {
       console.log(`removeMarkFromCategory(${mark}, ${categoryName}, ${email})`)
       return fetch(`/api/users/removeMarkFromCategory/${categoryName}?email=${email}`, {
           method: 'PUT',
+          headers: new Headers({
+            'Authorization': 'Basic bWFya3Mtd2ViOm1hcmtlcg=='
+          }),
           body: JSON.stringify(mark)
       })
       .then(res => res.json())

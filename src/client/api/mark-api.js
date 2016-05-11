@@ -6,7 +6,10 @@ export default {
       console.log(`addMark(${url}, ${email})`)
       return fetch(`/api/marks/addMark?email=${email}`, {
           method: 'POST',
-          body: url
+          body: url,
+          headers: new Headers({
+            'Authorization': 'Basic bWFya3Mtd2ViOm1hcmtlcg=='
+          }),
       })
       .then(res => res.json())
   },
@@ -15,7 +18,10 @@ export default {
       console.log(`removeMark(${mark})`)
       return fetch('/api/marks/removeMark', {
           method: 'PUT',
-          body: JSON.stringify(mark)
+          body: JSON.stringify(mark),
+          headers: new Headers({
+           'Authorization': 'Basic bWFya3Mtd2ViOm1hcmtlcg=='
+          }),
       })
       .then(res => {
           console.log(res)
@@ -27,7 +33,10 @@ export default {
       console.log(`fetchMarkMeta(${mark}`)
       return fetch('/api/marks/fetchMarkMeta', {
         method: 'POST',
-        body: JSON.stringify(mark)
+        body: JSON.stringify(mark),
+        headers: new Headers({
+          'Authorization': 'Basic bWFya3Mtd2ViOm1hcmtlcg=='
+        }),
       })
       .then(res => {
         console.log(res);

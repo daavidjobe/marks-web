@@ -1,4 +1,5 @@
 import React from 'react';
+import './forms.less';
 
 const MarkForm = props => (
 				<form className="mark-form" onSubmit={props.handleSubmit}>

@@ -1,4 +1,7 @@
 
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
+
 module.exports = {
   entry: [
    './src/client/index.js' 
@@ -39,7 +42,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: "style!css!less?sourceMap"
+        loader: "style!css!postcss!less?sourceMap"
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
@@ -67,5 +70,8 @@ module.exports = {
       }
     ]
   },
-  plugins: []
+  plugins: [],
+  postcss: function () {
+    return [precss, autoprefixer];
+  }
 };

@@ -1,43 +1,5 @@
 @import "../../variables.less";
 @import "../../buttons.less";
-.user-form {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px;
-    margin: 5px;
-    justify-content: flex-end;
-    .form-group {
-        margin: 5px;
-        flex-basis: 140px;
-        text-align: right;
-        p {
-            font-size: 10px;
-            color: @red;
-            text-align: left;
-        }
-    }
-    input {
-        outline: none;
-        border: none;
-        border-bottom: 2px solid @purple;
-        
-    }
-    input[type="submit"] {
-        background: transparent;
-        border: 1px solid @purple;
-        color: @purple;
-        cursor: pointer;
-        padding: 5px 10px;
-        &:hover {
-           border: 1px solid lighten(@purple, 15%);
-           color: lighten(@purple, 15%);
-           transition: all .4s ease-in; 
-        }
-        &:disabled {
-            opacity: .4;
-        }
-    }
-}
 
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
@@ -55,8 +17,6 @@ input:-webkit-autofill {
         }
 }
 
-.mark-form {
-    min-width: 220px;
-}
+
 
 
