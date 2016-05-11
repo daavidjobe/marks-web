@@ -3,7 +3,7 @@ import MarkStore from '../stores/mark-store';
 class MarkSocket {
 
   constructor() {
-    this.socket = new WebSocket("ws://" + location.hostname + ":" + '4567' + "/api/socket/");
+    this.socket = new WebSocket("ws://" + location.hostname + "/api/socket/");
     this.socket.onopen = function () {
       // socket is connected
       console.log('open');
