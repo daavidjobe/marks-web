@@ -113,7 +113,6 @@ class UserStore extends EventEmitter {
         mark.category = 'category';
         let marks = [...this.marks, mark];
         this.marks = marks;
-        MarkSocket.sendMessage(JSON.stringify(mark))
     }
     
     removeMark(mark) {
@@ -125,6 +124,7 @@ class UserStore extends EventEmitter {
         mark.thumbnail = meta.thumbnail;
         mark.tags = meta.tags;
         this.marks = [...marks, mark];
+        MarkSocket.sendMessage(mark);
     }
     
 }

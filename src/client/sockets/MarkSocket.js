@@ -18,7 +18,7 @@ class MarkSocket {
   }
   
   sendMessage(message) {
-    this.socket.send(message);
+    this.socket.send(JSON.stringify(message));
   }
 
 }
