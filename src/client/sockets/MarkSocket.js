@@ -5,7 +5,6 @@ class MarkSocket {
   constructor() {
     this.socket = new WebSocket("ws://" + location.hostname + "/api/socket/");
     this.socket.onopen = function () {
-      // socket is connected
       console.log('open');
     };
     this.socket.onerror = function (e) {

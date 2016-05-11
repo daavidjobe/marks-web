@@ -29,7 +29,7 @@ class MarkStore extends EventEmitter {
   }
   
   addPublicMark(publicMark) {
-    this.publicMarks = [...this.publicMarks, publicMark];
+    this.publicMarks = [publicMark, ...this.publicMarks];
   }
   
   getPublicMarks() {
