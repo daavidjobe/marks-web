@@ -1,4 +1,4 @@
-import MarkStore from '../stores/mark-store';
+import MarkActions from '../actions/mark-actions';
 
 class MarkSocket {
 
@@ -13,7 +13,7 @@ class MarkSocket {
     };
     this.socket.onmessage = function (e) {
       let mark = JSON.parse(e.data);
-      MarkStore.addPublicMark(mark);
+      MarkActions.addPublicMark(mark);
     };
   }
   

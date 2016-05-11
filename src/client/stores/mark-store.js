@@ -30,7 +30,6 @@ class MarkStore extends EventEmitter {
   
   addPublicMark(publicMark) {
     this.publicMarks = [...this.publicMarks, publicMark];
-    console.log('public marks length: ' + this.publicMarks.length);
   }
   
   getPublicMarks() {
@@ -44,6 +43,9 @@ markStore.dispatchToken = register((action) => {
   switch (action.actionType) {
     case MarkConstants.FETCH_PUBLISHED_MARKS:
     markStore.setPublicMarks(action.marks); 
+    break;
+    case MarkConstants.ADD_PUBLIC_MARK:
+    markStore.addPublicMark(action.mark);
     break;         
   }
   markStore.emitChange();

@@ -11,6 +11,10 @@ export default {
         })
     },
     
+    addPublicMark(mark) {
+        dispatch({actionType: MarkConstants.ADD_PUBLIC_MARK, mark})
+    },
+    
     removeMark(mark) {
         MarkAPI.removeMark(mark).then(res => {
             dispatch({actionType: MarkConstants.REMOVE_MARK, data: mark})
