@@ -1,4 +1,5 @@
 import {dispatch, register} from '../dispatchers/dispatcher';
+import MarkSocket from '../sockets/MarkSocket';
 import UserConstants from '../constants/user-constants';
 import MarkConstants from '../constants/mark-constants';
 import {EventEmitter} from 'events';
@@ -112,6 +113,7 @@ class UserStore extends EventEmitter {
         mark.category = 'category';
         let marks = [...this.marks, mark];
         this.marks = marks;
+        MarkSocket.sendMessage(JSON.stringify(mark))
     }
     
     removeMark(mark) {

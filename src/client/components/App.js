@@ -1,5 +1,5 @@
 import React from 'react';
-import auth from '../auth/auth';
+import MarkSocket from '../sockets/MarkSocket';
 import Template from './template';
 import Home from './home/Home';
 import UserDashboard from './dashboard/UserDashboard';
@@ -9,12 +9,8 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
 class App extends React.Component {
   
-  componentDidMount() {
-  
-  }
-  
   requireAuth(nextState, replace) {
-    console.log('route accepted')
+    console.log('route accepted');
     if (!UserStore.isLoggedIn()) {
       console.log('route NOT accepted')
       replace({

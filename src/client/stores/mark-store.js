@@ -24,9 +24,13 @@ class MarkStore extends EventEmitter {
   }
   
   setPublicMarks(publicMarks) {
-    console.log('setting public marks');
     console.log(publicMarks);
     this.publicMarks = publicMarks;
+  }
+  
+  addPublicMark(publicMark) {
+    this.publicMarks = [...this.publicMarks, publicMark];
+    console.log('public marks length: ' + this.publicMarks.length);
   }
   
   getPublicMarks() {

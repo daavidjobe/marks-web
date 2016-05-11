@@ -80,6 +80,9 @@ export default class Header extends React.Component {
             <img src={require('../../../assets/images/marks-logo.png') } onClick={this.goTo.bind(this, '') } width="160" alt="marks logo"/>
           </li>
           <li>
+            <p>{UserStore.getEmail()}</p>
+          </li>
+          <li>
             {buttons}
           </li>
         </ul>
