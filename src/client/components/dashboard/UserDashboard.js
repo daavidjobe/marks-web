@@ -29,17 +29,17 @@ export default class UserDashboard extends React.Component {
 	}
 	
 	componentDidMount() {
-    	UserStore.addChangeListener(this._onChange.bind(this));
+  	UserStore.addChangeListener(this._onChange.bind(this));
 		UserActions.fetchMarks(UserStore.getEmail())
-  	}
+  }
   
-  	componentWillUnmount() {
-    	UserStore.removeChangeListener(this._onChange.bind(this));
-  	}
+  componentWillUnmount() {
+  	UserStore.removeChangeListener(this._onChange.bind(this));
+  }
   
-  	_onChange() {
-    	this.setState({marks: UserStore.getMarks()});
-  	}
+  _onChange() {
+  	this.setState({marks: UserStore.getMarks()});
+  }
 
 	addCategory(e) {
 		e.preventDefault();

@@ -9,7 +9,6 @@ class MarkSocket {
       console.log('open');
     };
     this.socket.onerror = function (e) {
-      // some error happened
       console.log(e);
     };
     this.socket.onmessage = function (e) {
