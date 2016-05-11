@@ -29,10 +29,7 @@ export default {
 
   fetchMarkMeta: function (mark) {
     return fetch(`/scraper?url=${mark.url}`)
-      .then(res => {
-        console.log(res);
-        return res.json();
-      })
+      .then(res =>  res.json())
   },
   
   assignMetaToMark: function(mark, meta) {
