@@ -18,8 +18,10 @@ export default {
     },
     
     fetchMarkMeta(mark) {
-        MarkAPI.fetchMarkMeta(mark).then(res => {
-            dispatch({actionType: MarkConstants.FETCH_MARK_META, meta: res, mark})
+        MarkAPI.fetchMarkMeta(mark).then(meta => {
+            MarkAPI.assignMetaToMark(mark, meta).then(() => {
+              dispatch({actionType: MarkConstants.FETCH_MARK_META, mark, meta})  
+            })
         })
     },
     
