@@ -58,6 +58,48 @@
   }
 }
 
+.btn-secondary {
+    color: #ccc;
+    margin: 10px 5px;
+    padding: 15px;
+    text-decoration: none;
+    .fa {
+        margin-right: 5px;
+    }
+    &:hover {
+        border-bottom: 1px solid @purple;
+        color: @purple;
+        transition: all .4s ease-out;
+    }
+}
+
+.btn-secondary-active {
+     border-bottom: 1px solid @purple;
+     color: @purple !important;
+}
+
+.btn-thumb(@color) {
+   cursor: pointer;
+   font-size: 16px;
+   .fa {
+       font-size: 12px;
+       margin-left: 5px;
+   }
+    &:hover {
+        color: @color;
+        font-size: 18px;
+        transition: all .3s ease;
+    } 
+}
+
+
+.btn-promote {
+    .btn-thumb(@purple);
+}
+
+.btn-demote {
+    .btn-thumb(@red);
+}
 
 
 

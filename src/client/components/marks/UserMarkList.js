@@ -17,11 +17,11 @@ export default class UserMarkList extends React.Component {
 	}
 	
 	addToCategory(categoryName, mark) {
-		if(mark.category !== 'category')
 		UserActions.addMarkToCategory(mark, categoryName, UserStore.getEmail());
 	}
 	
 	removeFromCategory(mark) {
+		if(mark.category !== 'category')
 		UserActions.removeMarkFromCategory(mark, mark.category, UserStore.getEmail());
 	}
 

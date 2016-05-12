@@ -34,7 +34,7 @@ export default {
   
   assignMetaToMark: function(mark, meta) {
     meta.mark = mark;
-    return fetch(`/api/marks/assignMetaToMark`, {
+    return fetch('/api/marks/assignMetaToMark', {
       method: 'POST',
       body: JSON.stringify(meta),
       headers: new Headers({
@@ -47,6 +47,28 @@ export default {
   fetchPublicMarks: function () {
     return fetch('/api/marks/findPublishedMarks')
       .then(res => res.json())
+  },
+  
+  promote: function(mark, email) {
+    return fetch(`/api/marks/promote?email=${email}`, {
+      method: 'PUT',
+      body: JSON.stringify(mark),
+      headers: new Headers({
+        'Authorization': 'Basic bWFya3Mtd2ViOm1hcmtlcg=='
+      })
+    })
+    .then(res => res.json())
+  },
+  
+  demote: function(mark, email) {
+    return fetch(`/api/marks/demote?email=${email}`, {
+      method: 'PUT',
+      body: JSON.stringify(mark),
+      headers: new Headers({
+        'Authorization': 'Basic bWFya3Mtd2ViOm1hcmtlcg=='
+      })
+    })
+    .then(res => res.json())
   }
 }
 

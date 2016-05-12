@@ -35,6 +35,26 @@ class MarkStore extends EventEmitter {
   getPublicMarks() {
     return this.publicMarks;
   }
+  
+  promote(mark) {
+    let publicMarks = this.publicMarks.map(m => {
+      if(m.url === mark.url) {
+        m.promotions++;
+      }
+      return m;
+    })
+    this.publicMarks = publicMarks;
+  }
+  
+  demote(mark) {
+    let publicMarks = this.publicMarks.map(m => {
+      if(m.url === mark.url) {
+        m.demotions++;
+      }
+      return m;
+    })
+    this.publicMarks = publicMarks;
+  }
     
 }
 
@@ -46,7 +66,13 @@ markStore.dispatchToken = register((action) => {
     break;
     case MarkConstants.ADD_PUBLIC_MARK:
     markStore.addPublicMark(action.mark);
-    break;         
+    break;
+    case MarkConstants.PROMOTE:
+    markStore.promote(action.mark);
+    break;
+    case MarkConstants.DEMOTE:
+    markStore.demote(action.mark);
+    break;
   }
   markStore.emitChange();
 })

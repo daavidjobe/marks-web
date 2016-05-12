@@ -15,7 +15,7 @@ const UserMark = props => {
                 <img id="img" src={'data:image/jpeg;base64,' + props.mark.thumbnail}
                 alt={`screenshot of ${props.mark.url}`} onError={(img) => img.nativeEvent.target.src = props.defaultImage} />
                 <p className="timestamp">created: {moment(props.mark.creationDate, 'MMMM Do YYYY, h:mm:ss a').fromNow()}</p>
-                <div className="col">
+                <div className="col url">
                     <a target="_BLANK" href={props.mark.url}>{props.mark.url}</a>
                 </div>
                 <div className="col">
