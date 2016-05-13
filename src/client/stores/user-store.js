@@ -5,6 +5,10 @@ import MarkConstants from '../constants/mark-constants';
 import {EventEmitter} from 'events';
 import UserAPI from '../api/user-api';
 
+/*
+  A model store responsible for keeping track of Users and user related Mark operations
+*/
+
 
 const CHANGE_EVENT = 'change';
 

@@ -56,7 +56,7 @@ export default class Header extends React.Component {
   }
   
    showLock() {
-    this.state.lock.show((err, profile, token) => {
+    this.state.lock.show({icon: require('../../../assets/images/marks-logo.png')},(err, profile, token) => {
       if(err) console.log(err)
       UserStore.setToken(token);
       console.log(profile);
