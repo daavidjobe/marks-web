@@ -7,6 +7,7 @@ import UserStore from '../stores/user-store';
 import MarkStore from '../stores/mark-store';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
+
 class App extends React.Component {
   
   requireAuth(nextState, replace) {

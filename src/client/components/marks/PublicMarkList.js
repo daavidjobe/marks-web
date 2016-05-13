@@ -11,15 +11,13 @@ export default class PublicMarkList extends React.Component {
     super(props);
     this.state = {
       feed: [],
+      popular: [],
+      feedActive: true,
       tabButtons: [
         {
-          txt: 'feed',
-          symbol: 'fa fa-cogs',
           active: true
         },
         {
-          txt: 'most popular',
-          symbol: 'fa fa-thumbs-up',
           active: false
         }
       ]
@@ -36,53 +34,66 @@ export default class PublicMarkList extends React.Component {
   }
 
   _onChange() {
-    this.setState({ feed: MarkStore.getPublicMarks() });
+    this.setState({
+      feed: MarkStore.getPublicMarks(),
+      popular: MarkStore.getPopularMarks()
+    });
   }
-  
+
   viewFeed() {
+    MarkActions.fetchPublicMarks();
     let tabButton = this.state.tabButtons;
     tabButton[0].active = true;
     tabButton[1].active = false;
-    this.setState({tabButton});
+    this.setState({ tabButton, feedActive: true });
   }
-  
+
   viewMostPopular() {
+    MarkActions.fetchMostPopularMarks();
     let tabButton = this.state.tabButtons;
     tabButton[0].active = false;
     tabButton[1].active = true;
-    this.setState({tabButton});
+    this.setState({ tabButton, feedActive: false });
   }
-  
+
   promote(mark) {
     let email = UserStore.getEmail();
-    if(email !== null) {
+    if (email !== null) {
       MarkActions.promote(mark, email);
     }
   }
-  
+
   demote(mark) {
     let email = UserStore.getEmail();
-    if(email !== null) {
+    if (email !== null) {
       MarkActions.demote(mark, email);
     }
   }
 
   render() {
-    
-    let marks = this.state.feed.map((mark, index) => {
-      return <PublicMark handlePromote={this.promote.bind(this, mark)}
-      handleDemote={this.demote.bind(this, mark)}
-      mark={mark} key={index} />
-    });
+    let marks;
+    if (this.state.feedActive) {
+      marks = this.state.feed.map((mark, index) => {
+        return <PublicMark handlePromote={this.promote.bind(this, mark) }
+          handleDemote={this.demote.bind(this, mark) }
+          mark={mark} key={index} />
+      });
+    } else {
+      marks = this.state.popular.map((mark, index) => {
+        return <PublicMark handlePromote={this.promote.bind(this, mark) }
+          handleDemote={this.demote.bind(this, mark) }
+          mark={mark} key={index} />
+      });
+    }
 
     return (
       <div className="public-marks">
         <div className="public-mark-controls">
-          <TabButton handleClick={this.viewFeed.bind(this)} txt={this.state.tabButtons[0].txt}
-          active={this.state.tabButtons[0].active} symbol={this.state.tabButtons[0].symbol} />
-          <TabButton handleClick={this.viewMostPopular.bind(this)} txt={this.state.tabButtons[1].txt}
-          active={this.state.tabButtons[1].active} symbol={this.state.tabButtons[1].symbol} />
-        </div> 
+          <TabButton handleClick={this.viewFeed.bind(this) } txt="feed"
+            active={this.state.tabButtons[0].active} symbol="fa fa-cog" />
+          <TabButton handleClick={this.viewMostPopular.bind(this) } txt="most popular"
+            active={this.state.tabButtons[1].active} symbol="fa fa-thumbs-up" />
+        </div>
         <ul>
           {marks}
         </ul>

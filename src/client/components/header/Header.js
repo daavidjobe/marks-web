@@ -2,7 +2,6 @@ import React from 'react';
 import {browserHistory} from 'react-router';
 import UserStore from '../../stores/user-store';
 import UserActions from '../../actions/user-actions';
-import GoogleLoginButton from '../buttons/GoogleLoginButton';
 import './header.less';
 
 export default class Header extends React.Component {
@@ -13,7 +12,8 @@ export default class Header extends React.Component {
       loginToggled: false,
       action: '',
       user: UserStore.getUser(),
-      buttons: []
+      buttons: [],
+      lock: new Auth0Lock('uIm04ZM3E2HcN7mU4wM4qCIio7TxxQFt', 'cymarks.eu.auth0.com')
     }
   }
 
@@ -23,7 +23,7 @@ export default class Header extends React.Component {
       buttons.push({ txt: 'dashboard', classList: 'mark-aim', image: 'mark-aim.png', handler: this.goTo.bind(this, 'dashboard') })
       buttons.push({ txt: 'sign out', classList: 'fa fa-sign-out', handler: this.signOut.bind(this) })
     } else {
-      buttons.push({ txt: 'sign in', classList: 'fa fa-sign-in', handler: this.toggleSignin.bind(this) })
+      buttons.push({ txt: 'sign in', classList: 'fa fa-sign-in', handler: this.showLock.bind(this) })
     }
     this.setState({ buttons })
   }
@@ -51,12 +51,23 @@ export default class Header extends React.Component {
   }
 
   signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-      UserActions.logout();
-      browserHistory.replace('/');
+    UserActions.logout();
+    browserHistory.replace('/');
+  }
+  
+   showLock() {
+    this.state.lock.show((err, profile, token) => {
+      if(err) console.log(err)
+      UserStore.setToken(token);
+      console.log(profile);
+      
+      if(profile.email_verified) {
+        console.log('email is verified');
+        console.log(profile.email);
+        UserActions.signin(profile);
+      }
     });
+    
   }
 
   render() {
@@ -65,7 +76,7 @@ export default class Header extends React.Component {
       return (
         <button key={index} className="button" onClick={btn.handler}>
           <p>
-            {btn.image ? <img className={btn.classList} src={require(`../../../assets/images/${btn.image}`) } width="17" /> :
+            {btn.image ? <img className={btn.classList}src={require(`../../../assets/images/${btn.image}`) } width="17" /> :
               <i className={btn.classList} aria-hidden="true"></i>}
             {btn.txt}</p>
           <div className="underline"></div>
@@ -83,8 +94,6 @@ export default class Header extends React.Component {
             {buttons}
           </li>
         </ul>
-          <div className="login-buttons"
-          style={this.state.loginToggled === false || UserStore.isLoggedIn() ? {display: 'none'} : {}}><GoogleLoginButton /></div>
       </div>
     )
   }

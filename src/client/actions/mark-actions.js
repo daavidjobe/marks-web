@@ -35,6 +35,12 @@ export default {
             dispatch({ actionType: MarkConstants.FETCH_PUBLISHED_MARKS, marks })
         })
     },
+    
+    fetchMostPopularMarks() {
+      MarkAPI.fetchMostPopularMarks().then(marks => {
+          dispatch({ actionType: MarkConstants.FETCH_POPULAR_MARKS, marks })
+      }) 
+    },
 
     promote(mark, email) {
         MarkAPI.promote(mark, email).then(res => {

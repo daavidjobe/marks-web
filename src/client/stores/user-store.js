@@ -14,7 +14,7 @@ class UserStore extends EventEmitter {
         super();
         this.categories = [];
         this.marks = [];
-        this.user = {authenticated: this.isLoggedIn(), token: this._getToken()}
+        this.user = {authenticated: this.isLoggedIn(), token: this.getToken()}
     }
     
     emitChange() {
@@ -37,26 +37,21 @@ class UserStore extends EventEmitter {
         return localStorage.getItem('user');
     }
     
-    updateUser(usr) {
-        this._setToken();
-        localStorage.setItem('user', usr.email);
-        this.user = {
-            authenticated: this.isLoggedIn(),
-            token: this._getToken()
-        }
-        console.log(this.user);
+    setUser(user) {
+        this.user = user;
+        localStorage.setItem('user', user.email);
     }
     
     isLoggedIn() {
         return !!localStorage.token;
     }
     
-    _getToken() {
+    getToken() {
         return localStorage.token;
     }
     
-    _setToken() {
-        localStorage.token = Math.random().toString(36).substring(7);
+    setToken(token) {
+        localStorage.token = token
     }
     
     logout() {
@@ -134,7 +129,7 @@ let userStore = new UserStore();
 userStore.dispatchToken = register((action) => {
     switch (action.actionType) {
             case UserConstants.LOGIN_COMPLETE:
-                userStore.updateUser(action.user)
+                userStore.setUser(action.user)
                 break;
             case UserConstants.LOGOUT:
                 userStore.logout()

@@ -49,6 +49,11 @@ export default {
       .then(res => res.json())
   },
   
+  fetchMostPopularMarks: function () {
+    return fetch('/api/marks/findMostPopularMarks')
+      .then(res => res.json())
+  },
+  
   promote: function(mark, email) {
     return fetch(`/api/marks/promote?email=${email}`, {
       method: 'PUT',
