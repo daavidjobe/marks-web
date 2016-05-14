@@ -3,7 +3,7 @@ import MarkActions from '../actions/mark-actions';
 class MarkSocket {
 
   constructor() {
-    this.socket = new WebSocket("ws://" + location.hostname + "/api/socket/");
+    this.socket = new WebSocket("ws://" + location.hostname + ":4567/api/socket/");
     this.socket.onopen = function () {
       console.log('open');
     };

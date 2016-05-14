@@ -57,6 +57,8 @@ export default class UserDashboard extends React.Component {
 
 	addMark(e) {
 		e.preventDefault();
+		event.stopPropagation();
+		console.log(e);
 		let url = e.nativeEvent.target[0].value;
 		
 		if(url.length > 4 && validateUrl(url)) {

@@ -118,10 +118,9 @@ class UserStore extends EventEmitter {
         this.marks = this.marks.filter(m => m.url !== mark.url);;
     }
     
-    assignMetaToMark(meta, mark) {
+    assignThumbnailToMark(meta, mark) {
         let marks = this.marks.filter(m => m.url !== mark.url);
         mark.thumbnail = meta.thumbnail;
-        mark.tags = meta.tags;
         this.marks = [...marks, mark];
         MarkSocket.sendMessage(mark);
     }
@@ -158,8 +157,8 @@ userStore.dispatchToken = register((action) => {
             case MarkConstants.REMOVE_MARK:
                 userStore.removeMark(action.data)
                 break;
-            case MarkConstants.FETCH_MARK_META:
-                userStore.assignMetaToMark(action.meta, action.mark)
+            case MarkConstants.FETCH_MARK_THUMBNAIL:
+                userStore.assignThumbnailToMark(action.meta, action.mark)
                 break;
         }
         userStore.emitChange();

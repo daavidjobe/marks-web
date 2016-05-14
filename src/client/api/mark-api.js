@@ -27,14 +27,14 @@ export default {
       })
   },
 
-  fetchMarkMeta: function (mark) {
-    return fetch(`/scraper?url=${mark.url}`)
+  fetchThumbnail: function (mark) {
+    return fetch(`/scraper/thumbnail?url=${mark.url}`)
       .then(res =>  res.json())
   },
   
-  assignMetaToMark: function(mark, meta) {
+  assignThumbnailToMark: function(mark, meta) {
     meta.mark = mark;
-    return fetch('/api/marks/assignMetaToMark', {
+    return fetch('/api/marks/assignThumbnailToMark', {
       method: 'POST',
       body: JSON.stringify(meta),
       headers: new Headers({

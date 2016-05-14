@@ -8,7 +8,7 @@ export default {
     addMark(url, email) {
         MarkAPI.addMark(url, email).then(res => {
             dispatch({ actionType: MarkConstants.ADD_MARK, data: res })
-            this.fetchMarkMeta(res);
+            this.fetchThumbnail(res);
         })
     },
 
@@ -22,10 +22,10 @@ export default {
         })
     },
 
-    fetchMarkMeta(mark) {
-        MarkAPI.fetchMarkMeta(mark).then(meta => {
+    fetchThumbnail(mark) {
+        MarkAPI.fetchThumbnail(mark).then(meta => {
             MarkAPI.assignMetaToMark(mark, meta).then(() => {
-                dispatch({ actionType: MarkConstants.FETCH_MARK_META, mark, meta })
+                dispatch({ actionType: MarkConstants.FETCH_MARK_THUMBNAIL, mark, meta })
             })
         })
     },
