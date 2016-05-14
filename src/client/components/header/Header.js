@@ -60,12 +60,12 @@ export default class Header extends React.Component {
     this.state.lock.show({icon: require('../../../assets/images/marks-logo.png')},(err, profile, token) => {
       if(err) console.log(err)
       UserStore.setToken(token);
-      console.log(profile);
       
       if(profile.email_verified) {
         console.log('email is verified');
         console.log(profile.email);
         UserActions.signin(profile);
+        console.log(profile);
       }
     });
     

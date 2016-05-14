@@ -24,7 +24,7 @@ export default {
 
     fetchThumbnail(mark) {
         MarkAPI.fetchThumbnail(mark).then(meta => {
-            MarkAPI.assignMetaToMark(mark, meta).then(() => {
+            MarkAPI.assignThumbnailToMark(mark, meta).then(() => {
                 dispatch({ actionType: MarkConstants.FETCH_MARK_THUMBNAIL, mark, meta })
             })
         })
