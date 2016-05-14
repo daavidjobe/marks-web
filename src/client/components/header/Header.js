@@ -55,6 +55,7 @@ export default class Header extends React.Component {
     browserHistory.replace('/');
   }
   
+  // Using Auth0 for login
    showLock() {
     this.state.lock.show({icon: require('../../../assets/images/marks-logo.png')},(err, profile, token) => {
       if(err) console.log(err)

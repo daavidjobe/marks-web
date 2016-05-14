@@ -2,6 +2,12 @@ import {dispatch, register} from '../dispatchers/dispatcher';
 import MarkConstants from '../constants/mark-constants';
 import {EventEmitter} from 'events';
 
+
+
+/*
+  A model store responsible for keeping track of Marks
+*/
+
 const CHANGE_EVENT = 'change';
 
 class MarkStore extends EventEmitter {

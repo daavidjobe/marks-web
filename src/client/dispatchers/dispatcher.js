@@ -6,7 +6,7 @@ export function register(callback) {
     return flux.register(callback);
 }
 
-export function dispatch(actionType, action) {
+export function dispatch(actionType) {
     console.log(actionType);
-    flux.dispatch(actionType, action);
+    flux.dispatch(actionType);
 }
