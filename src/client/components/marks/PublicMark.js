@@ -12,7 +12,7 @@ const PublicMark = props => {
                     <i className="fa fa-thumbs-up" aria-hidden="true"></i></span>
                     <span className="btn-demote" onClick={props.handleDemote}>{props.mark.demotions}
                     <i className="fa fa-thumbs-down" aria-hidden="true"></i></span>
-                    <span>created: {moment.utc(props.mark.creationDate).fromNow()}</span>
+                    <span>created: {moment(props.mark.creationDate, 'MMMM Do YYYY, h:mm:ss a').fromNow()}</span>
                 </div>
                 <div className="col url">
                     <a target="_BLANK" href={props.mark.url}>{props.mark.url}</a>
