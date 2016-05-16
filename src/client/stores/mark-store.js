@@ -51,6 +51,7 @@ class MarkStore extends EventEmitter {
   }
   
   promote(mark) {
+    console.log(mark)
     let publicMarks = this.publicMarks.map(m => {
       if(m.url === mark.url) {
         m.promotions++;
