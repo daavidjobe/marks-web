@@ -16,7 +16,9 @@ const UserMark = props => {
                 alt={`screenshot of ${props.mark.url}`} onError={(img) => img.nativeEvent.target.src = props.defaultImage} />
                 <p className="timestamp">created: {moment(props.mark.creationDate, 'MMMM Do YYYY, h:mm:ss a').fromNow()}</p>
                 <div className="col url">
-                    <a target="_BLANK" href={props.mark.url}>{props.mark.url}</a>
+                    <a target="_BLANK" href={props.mark.url}>
+                        {props.mark.url.length > 30 ? props.mark.url.substring(0, 30) + '...' : props.mark.url}
+                    </a>
                 </div>
                 <div className="col">
                     <Dropdown title={props.mark.category}>

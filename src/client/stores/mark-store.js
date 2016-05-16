@@ -15,7 +15,6 @@ class MarkStore extends EventEmitter {
   constructor() {
     super();
     this.publicMarks = [];
-    this.popularMarks = [];
   }
   
   emitChange() {
@@ -34,10 +33,6 @@ class MarkStore extends EventEmitter {
     this.publicMarks = publicMarks;
   }
   
-  setPopularMarks(popularMarks) {
-    this.popularMarks = popularMarks;
-  }
-  
   addPublicMark(publicMark) {
     this.publicMarks = [publicMark, ...this.publicMarks];
   }
@@ -46,15 +41,11 @@ class MarkStore extends EventEmitter {
     return this.publicMarks;
   }
   
-  getPopularMarks() {
-    return this.popularMarks;
-  }
-  
   promote(mark) {
-    console.log(mark)
     let publicMarks = this.publicMarks.map(m => {
       if(m.url === mark.url) {
-        m.promotions++;
+        m.promotions += 1;
+        m.hasInteracted = true;
       }
       return m;
     })
@@ -64,7 +55,8 @@ class MarkStore extends EventEmitter {
   demote(mark) {
     let publicMarks = this.publicMarks.map(m => {
       if(m.url === mark.url) {
-        m.demotions++;
+        m.demotions += 1;
+        m.hasInteracted = true;
       }
       return m;
     })
@@ -80,7 +72,7 @@ markStore.dispatchToken = register((action) => {
     markStore.setPublicMarks(action.marks); 
     break;
     case MarkConstants.FETCH_POPULAR_MARKS:
-    markStore.setPopularMarks(action.marks);
+    markStore.setPublicMarks(action.marks);;
     break;
     case MarkConstants.ADD_PUBLIC_MARK:
     markStore.addPublicMark(action.mark);

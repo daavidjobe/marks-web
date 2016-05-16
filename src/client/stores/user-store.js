@@ -110,7 +110,7 @@ class UserStore extends EventEmitter {
     
     addMark(mark) {
         mark.category = 'category';
-        let marks = [...this.marks, mark];
+        let marks = [mark, ...this.marks];
         this.marks = marks;
     }
     
@@ -121,7 +121,7 @@ class UserStore extends EventEmitter {
     assignThumbnailToMark(meta, mark) {
         let marks = this.marks.filter(m => m.url !== mark.url);
         mark.thumbnail = meta.thumbnail;
-        this.marks = [...marks, mark];
+        this.marks = [mark, ...marks];
         MarkSocket.sendMessage(mark);
     }
     

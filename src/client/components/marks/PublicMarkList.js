@@ -36,7 +36,7 @@ export default class PublicMarkList extends React.Component {
   _onChange() {
     this.setState({
       feed: MarkStore.getPublicMarks(),
-      popular: MarkStore.getPopularMarks()
+      popular: MarkStore.getPublicMarks()
     });
   }
 

@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import UserStore from '../stores/user-store';
 
 export default {
 
@@ -45,12 +46,12 @@ export default {
   },
 
   fetchPublicMarks: function () {
-    return fetch('/api/marks/findPublishedMarks')
+    return fetch(`/api/marks/findPublishedMarks?email=${UserStore.getEmail()}`)
       .then(res => res.json())
   },
   
   fetchMostPopularMarks: function () {
-    return fetch('/api/marks/findMostPopularMarks')
+    return fetch(`/api/marks/findMostPopularMarks?email=${UserStore.getEmail()}`)
       .then(res => res.json())
   },
   

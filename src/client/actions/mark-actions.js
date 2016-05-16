@@ -44,14 +44,14 @@ export default {
 
     promote(mark, email) {
         MarkAPI.promote(mark, email).then(res => {
-            if(res === true)
+            if(res === 'mark promoted')
             dispatch({ actionType: MarkConstants.PROMOTE, mark, res })
         })
     },
 
     demote(mark, email) {
         MarkAPI.demote(mark, email).then(res => {
-            if(res === true)
+            if(res === 'mark demoted')
             dispatch({ actionType: MarkConstants.DEMOTE, mark, res })
         })
     }
