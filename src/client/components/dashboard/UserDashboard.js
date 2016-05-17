@@ -1,5 +1,4 @@
 import React from 'react';
-import Search from 'react-search'
 import CategoryForm from '../forms/CategoryForm';
 import MarkForm from '../forms/MarkForm';
 import CategoryList from '../categories/CategoryList';
