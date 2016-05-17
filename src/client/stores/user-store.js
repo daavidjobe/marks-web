@@ -122,12 +122,14 @@ class UserStore extends EventEmitter {
         let marks = this.marks.filter(m => m.url !== mark.url);
         mark.thumbnail = meta.thumbnail;
         this.marks = [mark, ...marks];
+        mark.promotions = 0;
+        mark.demotions = 0;
+        mark.hasInteracted = false;
         MarkSocket.sendMessage(mark);
     }
     
 }
-    
-    
+      
 let userStore = new UserStore();
 userStore.dispatchToken = register((action) => {
     switch (action.actionType) {

@@ -8,6 +8,8 @@ import MarkStore from '../stores/mark-store';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
 
+// Root component responsible of handeling routes
+
 class App extends React.Component {
   
   requireAuth(nextState, replace) {
