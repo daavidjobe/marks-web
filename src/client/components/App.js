@@ -2,6 +2,8 @@ import React from 'react';
 import MarkSocket from '../sockets/MarkSocket';
 import Template from './template';
 import Home from './home/Home';
+import AboutPage from './about/AboutPage';
+import FaqPage from './faq/FaqPage';
 import UserDashboard from './dashboard/UserDashboard';
 import UserStore from '../stores/user-store';
 import MarkStore from '../stores/mark-store';
@@ -29,6 +31,8 @@ class App extends React.Component {
         <Route path="/" component={Template}>
         <IndexRoute component={Home}/>
         <Route path="dashboard" component={UserDashboard} onEnter={this.requireAuth.bind(this)} />
+        <Route path="faq" component={FaqPage} />
+        <Route path="about" component={AboutPage} />
         </Route>
       </Router>
   );

@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from 'react-router';
+
 import './sidebar.less';
 export default () => {
     return (
@@ -6,13 +8,13 @@ export default () => {
         <ul>
             <li>
                 <button className="button">
-            <p><i className="fa fa-info"></i>about</p>
+            <Link to="about"><i className="fa fa-info"></i>about</Link>
             <div className="underline"></div>
             </button>
             </li>
             <li>
                 <button className="button">
-                     <p><i className="fa fa-question"></i>FAQ</p>
+                     <Link to="faq"><i className="fa fa-question"></i>FAQ</Link>
             <div className="underline"></div>
             </button>
             </li>
