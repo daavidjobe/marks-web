@@ -1,9 +1,13 @@
 import MarkActions from '../actions/mark-actions';
+import 'whatwg-fetch';
 
 class MarkSocket {
 
   constructor() {
-    this.socket = new WebSocket("ws://" + location.hostname + "/api/socket/");
+    fetch('/api/port').then(res => res.text())
+    .then(port => {
+      console.log(port);
+      this.socket = new WebSocket(`ws://${location.hostname}:${port}/api/socket/`);
     this.socket.onopen = function () {
       console.log('open');
     };
@@ -15,6 +19,7 @@ class MarkSocket {
       let mark = JSON.parse(e.data);
       MarkActions.addPublicMark(mark);
     };
+    })
   }
   
   sendMessage(message) {
